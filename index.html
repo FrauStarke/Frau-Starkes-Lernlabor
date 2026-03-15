@@ -7,21 +7,11 @@
 <style>
 
 body{
-font-family: Arial, sans-serif;
+font-family: Arial;
 background:white;
 color:#222;
 text-align:center;
 padding:40px;
-}
-
-h1{
-font-size:42px;
-margin-bottom:10px;
-}
-
-.subtitle{
-color:#666;
-margin-bottom:40px;
 }
 
 button{
@@ -34,11 +24,8 @@ background:#f5f5f5;
 cursor:pointer;
 }
 
-button:hover{
-background:#eaeaea;
-}
-
-.quiz{
+#mathebereich{
+display:none;
 margin-top:40px;
 }
 
@@ -48,24 +35,42 @@ font-size:18px;
 width:120px;
 }
 
-#result{
-margin-top:20px;
-font-size:20px;
-}
-
 </style>
 
 <script>
 
-function checkAnswer(){
+let a;
+let b;
 
-let answer = document.getElementById("answer").value;
+function matheStart(){
 
-if(answer == "336"){
-document.getElementById("result").innerHTML = "✅ Richtig!";
+document.getElementById("mathebereich").style.display="block";
+neueAufgabe();
+
+}
+
+function neueAufgabe(){
+
+a = Math.floor(Math.random()*10)+1;
+b = Math.floor(Math.random()*10)+1;
+
+document.getElementById("aufgabe").innerHTML = a + " × " + b;
+
+document.getElementById("antwort").value="";
+document.getElementById("result").innerHTML="";
+
+}
+
+function pruefen(){
+
+let richtig = a*b;
+let antwort = document.getElementById("antwort").value;
+
+if(antwort == richtig){
+document.getElementById("result").innerHTML="✅ Richtig!";
 }
 else{
-document.getElementById("result").innerHTML = "❌ Versuch es nochmal";
+document.getElementById("result").innerHTML="❌ Noch einmal versuchen";
 }
 
 }
@@ -78,25 +83,25 @@ document.getElementById("result").innerHTML = "❌ Versuch es nochmal";
 
 <h1>🔬 Frau Starkes Lernlabor</h1>
 
-<p class="subtitle">Interaktive Übungen für Mathematik und Physik</p>
+<p>Interaktive Übungen für Mathematik und Physik</p>
 
-<button>Mathe</button>
-<button>Physik</button>
-<button>Quiz</button>
+<button onclick="matheStart()">Mathe</button>
 
-<div class="quiz">
+<div id="mathebereich">
 
-<h2>Kopfrechnen</h2>
+<h2>Kopfrechnen – Einmaleins</h2>
 
-<p>48 × 7 = ?</p>
+<p id="aufgabe"></p>
 
-<input id="answer" type="number">
+<input id="antwort" type="number">
 
 <br><br>
 
-<button onclick="checkAnswer()">Antwort prüfen</button>
+<button onclick="pruefen()">Antwort prüfen</button>
 
-<div id="result"></div>
+<button onclick="neueAufgabe()">Neue Aufgabe</button>
+
+<p id="result"></p>
 
 </div>
 
