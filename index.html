@@ -1,368 +1,581 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Frau Starkes Lernlabor</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Frau Starkes Lernlabor</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f6f8fb;
-      color: #1f2937;
-    }
+<style>
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#f6f8fb;
+  color:#1f2937;
+}
 
-    header {
-      text-align: center;
-      padding: 40px 20px 20px 20px;
-    }
+header{
+  text-align:center;
+  padding:40px 20px 20px 20px;
+}
 
-    h1 {
-      margin: 0;
-      font-size: 2.4rem;
-    }
+h1{
+  margin:0;
+  font-size:2.4rem;
+}
 
-    .subtitle {
-      margin-top: 10px;
-      color: #6b7280;
-      font-size: 1.05rem;
-    }
+.subtitle{
+  margin-top:10px;
+  color:#6b7280;
+}
 
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 20px;
-    }
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:20px;
+}
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 20px;
-      margin-top: 25px;
-    }
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:20px;
+  margin-top:30px;
+}
 
-    .card {
-      background: white;
-      border: 1px solid #dbe3ea;
-      border-radius: 16px;
-      padding: 24px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-      cursor: pointer;
-      text-align: left;
-    }
+.card{
+  background:white;
+  border:1px solid #dbe3ea;
+  border-radius:16px;
+  padding:24px;
+  cursor:pointer;
+  box-shadow:0 4px 12px rgba(0,0,0,0.04);
+  transition:transform 0.15s ease, box-shadow 0.15s ease;
+}
 
-    .card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-    }
+.card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 8px 20px rgba(0,0,0,0.08);
+}
 
-    .card h2 {
-      margin-top: 0;
-      margin-bottom: 10px;
-      font-size: 1.4rem;
-    }
+.card h2{
+  margin-top:0;
+}
 
-    .card p {
-      margin: 0;
-      color: #4b5563;
-      line-height: 1.5;
-    }
+.section{
+  display:none;
+  margin-top:30px;
+  background:white;
+  border-radius:16px;
+  padding:24px;
+  border:1px solid #dbe3ea;
+  box-shadow:0 4px 12px rgba(0,0,0,0.04);
+}
 
-    .section {
-      display: none;
-      margin-top: 30px;
-      background: white;
-      border: 1px solid #dbe3ea;
-      border-radius: 16px;
-      padding: 24px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-    }
+.section.active{
+  display:block;
+}
 
-    .section.active {
-      display: block;
-    }
+button{
+  padding:10px 18px;
+  margin:8px 8px 8px 0;
+  border-radius:10px;
+  border:1px solid #cbd5e1;
+  background:white;
+  cursor:pointer;
+  font-size:1rem;
+}
 
-    .back-btn, .action-btn {
-      background: white;
-      border: 1px solid #cbd5e1;
-      border-radius: 10px;
-      padding: 12px 18px;
-      font-size: 1rem;
-      cursor: pointer;
-      margin: 8px 8px 8px 0;
-    }
+button:hover{
+  background:#f3f4f6;
+}
 
-    .back-btn:hover, .action-btn:hover {
-      background: #f3f4f6;
-    }
+.info-text{
+  color:#4b5563;
+  line-height:1.6;
+}
 
-    .task-box {
-      margin-top: 20px;
-      padding: 20px;
-      background: #f8fafc;
-      border: 1px solid #e5e7eb;
-      border-radius: 14px;
-      text-align: center;
-    }
+.quiz-question{
+  margin-top:18px;
+  padding:15px;
+  background:#f8fafc;
+  border-radius:10px;
+  border:1px solid #e5e7eb;
+}
 
-    .task {
-      font-size: 2rem;
-      margin-bottom: 16px;
-      font-weight: bold;
-    }
+.quiz-question label{
+  display:block;
+  margin:6px 0;
+  cursor:pointer;
+}
 
-    input[type="number"] {
-      padding: 12px;
-      font-size: 1.1rem;
-      width: 140px;
-      border: 1px solid #cbd5e1;
-      border-radius: 10px;
-      text-align: center;
-    }
+.task-box, .sim-box, .spectrum-box{
+  margin-top:24px;
+  padding:20px;
+  background:#f8fafc;
+  border:1px solid #e5e7eb;
+  border-radius:14px;
+}
 
-    .result {
-      margin-top: 18px;
-      font-size: 1.1rem;
-      min-height: 28px;
-      font-weight: bold;
-    }
+.task{
+  font-size:28px;
+  margin-bottom:10px;
+  font-weight:bold;
+}
 
-    .info-text {
-      color: #4b5563;
-      line-height: 1.6;
-    }
+input[type="number"]{
+  padding:10px;
+  font-size:18px;
+  width:130px;
+  text-align:center;
+  border:1px solid #cbd5e1;
+  border-radius:10px;
+}
 
-    .quiz-question {
-      margin-top: 24px;
-      padding: 18px;
-      background: #f8fafc;
-      border: 1px solid #e5e7eb;
-      border-radius: 14px;
-    }
+.result{
+  margin-top:15px;
+  min-height:28px;
+  font-weight:bold;
+}
 
-    .quiz-question p {
-      font-weight: bold;
-      margin-top: 0;
-    }
+canvas{
+  background:white;
+  border:1px solid #dbe3ea;
+  border-radius:10px;
+  margin-top:15px;
+  width:100%;
+  max-width:760px;
+  display:block;
+}
 
-    .quiz-question label {
-      display: block;
-      margin: 10px 0;
-      color: #374151;
-      cursor: pointer;
-    }
+.slider-row{
+  margin-top:14px;
+}
 
-    .score-box {
-      margin-top: 24px;
-      padding: 16px;
-      border-radius: 12px;
-      background: #f8fafc;
-      border: 1px solid #e5e7eb;
-      font-weight: bold;
-    }
+.slider-row label{
+  display:inline-block;
+  width:120px;
+}
 
-    footer {
-      text-align: center;
-      color: #6b7280;
-      font-size: 0.95rem;
-      padding: 35px 20px;
-    }
-  </style>
+.slider-row input[type="range"]{
+  width:220px;
+  max-width:100%;
+  vertical-align:middle;
+}
+
+.spectrum-bar{
+  display:grid;
+  grid-template-columns:1.5fr 1.3fr 1.1fr 1fr 0.9fr 0.9fr 0.8fr;
+  gap:6px;
+  margin-top:16px;
+}
+
+.spectrum-item{
+  border:none;
+  border-radius:12px;
+  padding:14px 10px;
+  font-weight:bold;
+  cursor:pointer;
+  transition:transform 0.12s ease, box-shadow 0.12s ease;
+  color:#111827;
+}
+
+.spectrum-item:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 16px rgba(0,0,0,0.10);
+}
+
+.radio{background:#dbeafe;}
+.mikro{background:#bfdbfe;}
+.ir{background:#fde68a;}
+.visible{background:linear-gradient(90deg,#ef4444,#f59e0b,#eab308,#22c55e,#3b82f6,#8b5cf6);}
+.uv{background:#c4b5fd;}
+.xray{background:#fecdd3;}
+.gamma{background:#fca5a5;}
+
+.spectrum-info{
+  margin-top:18px;
+  background:white;
+  border:1px solid #dbe3ea;
+  border-radius:12px;
+  padding:16px;
+  min-height:120px;
+}
+
+.spectrum-meta{
+  margin-top:10px;
+  color:#4b5563;
+}
+
+.small{
+  font-size:0.95rem;
+  color:#6b7280;
+}
+
+footer{
+  text-align:center;
+  color:#6b7280;
+  font-size:0.95rem;
+  padding:35px 20px;
+}
+
+@media (max-width:800px){
+  .spectrum-bar{
+    grid-template-columns:1fr;
+  }
+
+  .slider-row label{
+    display:block;
+    width:auto;
+    margin-bottom:6px;
+  }
+}
+</style>
 </head>
 <body>
 
-  <header>
-    <h1>🔬 Frau Starkes Lernlabor</h1>
-    <div class="subtitle">Interaktive Übungen für Mathematik, Physik und Chemie</div>
-  </header>
+<header>
+  <h1>🔬 Frau Starkes Lernlabor</h1>
+  <p class="subtitle">Interaktive Übungen für Mathematik, Physik und Chemie</p>
+</header>
 
-  <div class="container">
+<div class="container">
 
-    <div id="home">
-      <div class="grid">
-        <div class="card" onclick="showSection('mathe')">
-          <h2>🧮 Mathe</h2>
-          <p>Kopfrechnen, Einmaleins und weitere interaktive Übungen.</p>
-        </div>
+  <div id="home">
+    <div class="grid">
+      <div class="card" onclick="showSection('mathe')">
+        <h2>🧮 Mathe</h2>
+        <p>Kopfrechnen und Einmaleins</p>
+      </div>
 
-        <div class="card" onclick="showSection('physik')">
-          <h2>⚡ Physik</h2>
-          <p>Quizze, Simulationen und digitale Aufgaben für den Physikunterricht.</p>
-        </div>
+      <div class="card" onclick="showSection('physik')">
+        <h2>⚡ Physik</h2>
+        <p>Elektromagnetische Wellen, Quiz und Simulationen</p>
+      </div>
 
-        <div class="card" onclick="showSection('chemie')">
-          <h2>🧪 Chemie</h2>
-          <p>Grundlagen, Stoffe, Teilchenmodell und interaktive Lernangebote.</p>
-        </div>
+      <div class="card" onclick="showSection('chemie')">
+        <h2>🧪 Chemie</h2>
+        <p>Vorbereitet für spätere Übungen</p>
       </div>
     </div>
-
-    <div id="mathe" class="section">
-      <button class="back-btn" onclick="goHome()">← Zurück zur Startseite</button>
-      <h2>🧮 Mathe</h2>
-      <p class="info-text">
-        Hier übst du das kleine und große Einmaleins. Klicke auf „Neue Aufgabe“ und prüfe deine Antwort.
-      </p>
-
-      <div class="task-box">
-        <div class="task" id="aufgabe">7 × 8</div>
-
-        <input id="antwort" type="number" placeholder="Antwort">
-
-        <div>
-          <button class="action-btn" onclick="pruefen()">Antwort prüfen</button>
-          <button class="action-btn" onclick="neueAufgabe()">Neue Aufgabe</button>
-        </div>
-
-        <div class="result" id="result"></div>
-      </div>
-    </div>
-
-    <div id="physik" class="section">
-      <button class="back-btn" onclick="goHome()">← Zurück zur Startseite</button>
-      <h2>⚡ Physik – Elektromagnetische Wellen</h2>
-      <p class="info-text">
-        Beantworte die Fragen zu elektromagnetischen Wellen und überprüfe anschließend dein Ergebnis.
-      </p>
-
-      <div class="quiz-question">
-        <p>1. Elektromagnetische Wellen benötigen zur Ausbreitung ...</p>
-        <label><input type="radio" name="q1" value="a"> ein Wasserbecken</label>
-        <label><input type="radio" name="q1" value="b"> ein Medium wie Luft oder Wasser</label>
-        <label><input type="radio" name="q1" value="c"> kein Medium</label>
-      </div>
-
-      <div class="quiz-question">
-        <p>2. Welche der folgenden Wellen gehört zu den elektromagnetischen Wellen?</p>
-        <label><input type="radio" name="q2" value="a"> Schallwellen</label>
-        <label><input type="radio" name="q2" value="b"> Lichtwellen</label>
-        <label><input type="radio" name="q2" value="c"> Wasserwellen</label>
-      </div>
-
-      <div class="quiz-question">
-        <p>3. Was haben alle elektromagnetischen Wellen gemeinsam?</p>
-        <label><input type="radio" name="q3" value="a"> Sie breiten sich im Vakuum mit Lichtgeschwindigkeit aus</label>
-        <label><input type="radio" name="q3" value="b"> Sie sind immer sichtbar</label>
-        <label><input type="radio" name="q3" value="c"> Sie brauchen Luft zur Ausbreitung</label>
-      </div>
-
-      <div class="quiz-question">
-        <p>4. Welche Aussage ist richtig?</p>
-        <label><input type="radio" name="q4" value="a"> Radiowellen haben eine kleinere Wellenlänge als Röntgenstrahlen</label>
-        <label><input type="radio" name="q4" value="b"> Röntgenstrahlen sind energiereicher als Radiowellen</label>
-        <label><input type="radio" name="q4" value="c"> Mikrowellen sind keine elektromagnetischen Wellen</label>
-      </div>
-
-      <div class="quiz-question">
-        <p>5. Welche Reihenfolge geht von niedriger zu höherer Frequenz?</p>
-        <label><input type="radio" name="q5" value="a"> Radiowellen → Mikrowellen → sichtbares Licht</label>
-        <label><input type="radio" name="q5" value="b"> sichtbares Licht → Mikrowellen → Radiowellen</label>
-        <label><input type="radio" name="q5" value="c"> UV-Strahlung → Infrarot → Radiowellen</label>
-      </div>
-
-      <button class="action-btn" onclick="physikAuswerten()">Quiz auswerten</button>
-      <button class="action-btn" onclick="physikZuruecksetzen()">Antworten löschen</button>
-
-      <div class="score-box" id="physikErgebnis"></div>
-    </div>
-
-    <div id="chemie" class="section">
-      <button class="back-btn" onclick="goHome()">← Zurück zur Startseite</button>
-      <h2>🧪 Chemie</h2>
-      <p class="info-text">
-        Dieser Bereich ist vorbereitet. Hier können später Chemie-Quizze, Übungen zum Periodensystem oder digitale Arbeitsblätter ergänzt werden.
-      </p>
-    </div>
-
   </div>
 
-  <footer>
-    Frau Starkes Lernlabor
-  </footer>
+  <div id="mathe" class="section">
+    <button onclick="goHome()">← Zurück</button>
 
-  <script>
-    let a;
-    let b;
+    <h2>🧮 Einmaleins-Trainer</h2>
+    <p class="info-text">Hier übst du das kleine und große Einmaleins.</p>
 
-    function showSection(sectionId) {
-      document.getElementById("home").style.display = "none";
+    <div class="task-box">
+      <div class="task" id="aufgabe"></div>
+      <input id="antwort" type="number" placeholder="Antwort">
+      <br>
+      <button onclick="pruefen()">Antwort prüfen</button>
+      <button onclick="neueAufgabe()">Neue Aufgabe</button>
+      <p id="result" class="result"></p>
+    </div>
+  </div>
 
-      const sections = document.querySelectorAll(".section");
-      sections.forEach(section => section.classList.remove("active"));
+  <div id="physik" class="section">
+    <button onclick="goHome()">← Zurück</button>
 
-      document.getElementById(sectionId).classList.add("active");
+    <h2>⚡ Physik – Elektromagnetische Wellen</h2>
+    <p class="info-text">
+      Hier findest du ein Quiz, eine Wellensimulation und ein interaktives elektromagnetisches Spektrum.
+    </p>
 
-      if (sectionId === "mathe") {
-        neueAufgabe();
-      }
+    <h3>Quiz</h3>
+
+    <div class="quiz-question">
+      <p>1. Elektromagnetische Wellen benötigen zur Ausbreitung ...</p>
+      <label><input type="radio" name="q1" value="a"> ein Medium</label>
+      <label><input type="radio" name="q1" value="b"> Wasser</label>
+      <label><input type="radio" name="q1" value="c"> kein Medium</label>
+    </div>
+
+    <div class="quiz-question">
+      <p>2. Welche Welle gehört zu den elektromagnetischen Wellen?</p>
+      <label><input type="radio" name="q2" value="a"> Schall</label>
+      <label><input type="radio" name="q2" value="b"> Licht</label>
+      <label><input type="radio" name="q2" value="c"> Wasserwellen</label>
+    </div>
+
+    <div class="quiz-question">
+      <p>3. Alle elektromagnetischen Wellen ...</p>
+      <label><input type="radio" name="q3" value="a"> bewegen sich im Vakuum mit Lichtgeschwindigkeit</label>
+      <label><input type="radio" name="q3" value="b"> sind sichtbar</label>
+      <label><input type="radio" name="q3" value="c"> brauchen Luft</label>
+    </div>
+
+    <div class="quiz-question">
+      <p>4. Welche Aussage stimmt?</p>
+      <label><input type="radio" name="q4" value="a"> Radiowellen sind energiereicher</label>
+      <label><input type="radio" name="q4" value="b"> Röntgenstrahlen sind energiereicher</label>
+      <label><input type="radio" name="q4" value="c"> Mikrowellen sind keine elektromagnetischen Wellen</label>
+    </div>
+
+    <div class="quiz-question">
+      <p>5. Welche Reihenfolge zeigt steigende Frequenz?</p>
+      <label><input type="radio" name="q5" value="a"> Radiowellen → Mikrowellen → Licht</label>
+      <label><input type="radio" name="q5" value="b"> Licht → Mikrowellen → Radiowellen</label>
+      <label><input type="radio" name="q5" value="c"> UV → Infrarot → Radiowellen</label>
+    </div>
+
+    <button onclick="physikAuswerten()">Quiz auswerten</button>
+    <button onclick="physikZuruecksetzen()">Antworten löschen</button>
+
+    <div id="physikErgebnis" class="result"></div>
+
+    <div class="sim-box">
+      <h3>🌊 Wellensimulation</h3>
+      <p class="info-text">
+        Verändere Amplitude, Wellenlänge und Geschwindigkeit.
+      </p>
+
+      <canvas id="waveCanvas" width="760" height="260"></canvas>
+
+      <div class="slider-row">
+        <label for="amplitude">Amplitude</label>
+        <input id="amplitude" type="range" min="10" max="100" value="40">
+        <span id="ampValue">40</span>
+      </div>
+
+      <div class="slider-row">
+        <label for="wavelength">Wellenlänge</label>
+        <input id="wavelength" type="range" min="50" max="300" value="150">
+        <span id="waveValue">150</span>
+      </div>
+
+      <div class="slider-row">
+        <label for="speed">Geschwindigkeit</label>
+        <input id="speed" type="range" min="1" max="10" value="3">
+        <span id="speedValue">3</span>
+      </div>
+
+      <p class="small">
+        Große Wellenlänge = Wellenberge weiter auseinander. Große Amplitude = größere Auslenkung.
+      </p>
+    </div>
+
+    <div class="spectrum-box">
+      <h3>📡 Interaktives elektromagnetisches Spektrum</h3>
+      <p class="info-text">
+        Klicke auf einen Bereich des Spektrums.
+      </p>
+
+      <div class="spectrum-bar">
+        <button class="spectrum-item radio" onclick="showSpectrumInfo('radio')">Radiowellen</button>
+        <button class="spectrum-item mikro" onclick="showSpectrumInfo('mikro')">Mikrowellen</button>
+        <button class="spectrum-item ir" onclick="showSpectrumInfo('ir')">Infrarot</button>
+        <button class="spectrum-item visible" onclick="showSpectrumInfo('visible')">sichtbares Licht</button>
+        <button class="spectrum-item uv" onclick="showSpectrumInfo('uv')">UV</button>
+        <button class="spectrum-item xray" onclick="showSpectrumInfo('xray')">Röntgen</button>
+        <button class="spectrum-item gamma" onclick="showSpectrumInfo('gamma')">Gamma</button>
+      </div>
+
+      <div id="spectrumInfo" class="spectrum-info">
+        <strong>Elektromagnetisches Spektrum</strong>
+        <p>Klicke oben auf einen Bereich, um Informationen zu Frequenz, Wellenlänge und Verwendung zu sehen.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="chemie" class="section">
+    <button onclick="goHome()">← Zurück</button>
+    <h2>🧪 Chemie</h2>
+    <p class="info-text">Hier entstehen später Chemie-Übungen.</p>
+  </div>
+
+</div>
+
+<footer>
+  Frau Starkes Lernlabor
+</footer>
+
+<script>
+let a, b;
+
+function showSection(id){
+  document.getElementById("home").style.display = "none";
+  document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+
+  if(id === "mathe"){
+    neueAufgabe();
+  }
+}
+
+function goHome(){
+  document.getElementById("home").style.display = "block";
+  document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+}
+
+function neueAufgabe(){
+  a = Math.floor(Math.random() * 20) + 1;
+  b = Math.floor(Math.random() * 20) + 1;
+  document.getElementById("aufgabe").textContent = a + " × " + b;
+  document.getElementById("result").textContent = "";
+  document.getElementById("antwort").value = "";
+}
+
+function pruefen(){
+  let antwort = document.getElementById("antwort").value;
+
+  if(antwort == a * b){
+    document.getElementById("result").textContent = "✅ Richtig";
+  } else {
+    document.getElementById("result").textContent = "❌ Noch einmal versuchen";
+  }
+}
+
+function physikAuswerten(){
+  const loesungen = {
+    q1:"c",
+    q2:"b",
+    q3:"a",
+    q4:"b",
+    q5:"a"
+  };
+
+  const erklaerung = {
+    q1:"Elektromagnetische Wellen können sich auch im Vakuum ausbreiten.",
+    q2:"Licht ist eine elektromagnetische Welle.",
+    q3:"Alle elektromagnetischen Wellen bewegen sich im Vakuum mit Lichtgeschwindigkeit.",
+    q4:"Röntgenstrahlen sind energiereicher als Radiowellen.",
+    q5:"Radiowellen haben die niedrigste Frequenz, danach kommen Mikrowellen und dann sichtbares Licht."
+  };
+
+  let punkte = 0;
+  let text = "";
+
+  for(let q in loesungen){
+    let auswahl = document.querySelector('input[name="' + q + '"]:checked');
+
+    if(auswahl && auswahl.value === loesungen[q]){
+      punkte++;
+      text += "Frage " + q[1] + ": ✅ richtig<br>";
+    } else if(auswahl){
+      text += "Frage " + q[1] + ": ❌ falsch – " + erklaerung[q] + "<br>";
+    } else {
+      text += "Frage " + q[1] + ": ❌ nicht beantwortet – " + erklaerung[q] + "<br>";
     }
+  }
 
-    function goHome() {
-      document.getElementById("home").style.display = "block";
+  text += "<br><b>Punkte: " + punkte + " / 5</b>";
 
-      const sections = document.querySelectorAll(".section");
-      sections.forEach(section => section.classList.remove("active"));
+  document.getElementById("physikErgebnis").innerHTML = text;
+}
+
+function physikZuruecksetzen(){
+  document.querySelectorAll('#physik input[type="radio"]').forEach(r => r.checked = false);
+  document.getElementById("physikErgebnis").innerHTML = "";
+}
+
+const spectrumData = {
+  radio: {
+    title: "📻 Radiowellen",
+    text: "Radiowellen haben die größte Wellenlänge und die niedrigste Frequenz im elektromagnetischen Spektrum.",
+    meta: "Verwendung: Radio, Funk, Kommunikation"
+  },
+  mikro: {
+    title: "📶 Mikrowellen",
+    text: "Mikrowellen haben kürzere Wellenlängen als Radiowellen. Sie werden unter anderem in der Kommunikation und in Mikrowellengeräten genutzt.",
+    meta: "Verwendung: WLAN, Radar, Mikrowelle"
+  },
+  ir: {
+    title: "🌡️ Infrarot",
+    text: "Infrarotstrahlung ist für das menschliche Auge unsichtbar und wird oft als Wärmestrahlung wahrgenommen.",
+    meta: "Verwendung: Wärmekameras, Fernbedienungen"
+  },
+  visible: {
+    title: "🌈 Sichtbares Licht",
+    text: "Dieser kleine Bereich des Spektrums ist für den Menschen sichtbar. Er reicht von Rot bis Violett.",
+    meta: "Verwendung: Sehen, Beleuchtung, Optik"
+  },
+  uv: {
+    title: "☀️ Ultraviolett",
+    text: "UV-Strahlung hat eine höhere Frequenz als sichtbares Licht. Zu viel UV-Strahlung kann Haut und Augen schädigen.",
+    meta: "Verwendung: Desinfektion, Schwarzlicht"
+  },
+  xray: {
+    title: "🩻 Röntgenstrahlung",
+    text: "Röntgenstrahlen sind sehr energiereich und können viele Stoffe durchdringen.",
+    meta: "Verwendung: Medizinische Bildgebung"
+  },
+  gamma: {
+    title: "☢️ Gammastrahlung",
+    text: "Gammastrahlung besitzt die höchste Frequenz und die größte Energie im elektromagnetischen Spektrum.",
+    meta: "Verwendung: Strahlentherapie, Kernphysik"
+  }
+};
+
+function showSpectrumInfo(key){
+  const info = spectrumData[key];
+  document.getElementById("spectrumInfo").innerHTML =
+    "<strong>" + info.title + "</strong>" +
+    "<p>" + info.text + "</p>" +
+    "<div class='spectrum-meta'>" + info.meta + "</div>";
+}
+
+const canvas = document.getElementById("waveCanvas");
+const ctx = canvas.getContext("2d");
+
+const amplitudeSlider = document.getElementById("amplitude");
+const wavelengthSlider = document.getElementById("wavelength");
+const speedSlider = document.getElementById("speed");
+
+const ampValue = document.getElementById("ampValue");
+const waveValue = document.getElementById("waveValue");
+const speedValue = document.getElementById("speedValue");
+
+let phase = 0;
+
+function updateSliderLabels(){
+  ampValue.textContent = amplitudeSlider.value;
+  waveValue.textContent = wavelengthSlider.value;
+  speedValue.textContent = speedSlider.value;
+}
+
+amplitudeSlider.addEventListener("input", updateSliderLabels);
+wavelengthSlider.addEventListener("input", updateSliderLabels);
+speedSlider.addEventListener("input", updateSliderLabels);
+
+function drawWave(){
+  const amplitude = Number(amplitudeSlider.value);
+  const wavelength = Number(wavelengthSlider.value);
+  const speed = Number(speedSlider.value);
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  ctx.strokeStyle = "#cbd5e1";
+  ctx.lineWidth = 1;
+
+  ctx.beginPath();
+  ctx.moveTo(0, canvas.height / 2);
+  ctx.lineTo(canvas.width, canvas.height / 2);
+  ctx.stroke();
+
+  ctx.strokeStyle = "#2563eb";
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+
+  for(let x = 0; x < canvas.width; x++){
+    const y = canvas.height / 2 + amplitude * Math.sin((2 * Math.PI * x) / wavelength + phase);
+
+    if(x === 0){
+      ctx.moveTo(x, y);
+    } else {
+      ctx.lineTo(x, y);
     }
+  }
 
-    function neueAufgabe() {
-      a = Math.floor(Math.random() * 20) + 1;
-      b = Math.floor(Math.random() * 20) + 1;
+  ctx.stroke();
 
-      document.getElementById("aufgabe").textContent = a + " × " + b;
-      document.getElementById("antwort").value = "";
-      document.getElementById("result").textContent = "";
-    }
+  phase += speed * 0.04;
+  requestAnimationFrame(drawWave);
+}
 
-    function pruefen() {
-      const eingabe = Number(document.getElementById("antwort").value);
-      const richtig = a * b;
-
-      if (eingabe === richtig) {
-        document.getElementById("result").textContent = "✅ Richtig!";
-      } else {
-        document.getElementById("result").textContent = "❌ Noch einmal versuchen.";
-      }
-    }
-
-    function physikAuswerten() {
-      let punkte = 0;
-
-      const loesungen = {
-        q1: "c",
-        q2: "b",
-        q3: "a",
-        q4: "b",
-        q5: "a"
-      };
-
-      for (let frage in loesungen) {
-        const auswahl = document.querySelector('input[name="' + frage + '"]:checked');
-        if (auswahl && auswahl.value === loesungen[frage]) {
-          punkte++;
-        }
-      }
-
-      let rueckmeldung = "Du hast " + punkte + " von 5 Punkten erreicht.";
-
-      if (punkte === 5) {
-        rueckmeldung += " ✅ Sehr stark!";
-      } else if (punkte >= 3) {
-        rueckmeldung += " 👍 Gut gemacht!";
-      } else {
-        rueckmeldung += " 📘 Schau dir das Thema noch einmal an.";
-      }
-
-      document.getElementById("physikErgebnis").textContent = rueckmeldung;
-    }
-
-    function physikZuruecksetzen() {
-      const radios = document.querySelectorAll('#physik input[type="radio"]');
-      radios.forEach(radio => radio.checked = false);
-      document.getElementById("physikErgebnis").textContent = "";
-    }
-  </script>
+updateSliderLabels();
+drawWave();
+</script>
 
 </body>
 </html>
