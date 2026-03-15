@@ -134,6 +134,35 @@
       line-height: 1.6;
     }
 
+    .quiz-question {
+      margin-top: 24px;
+      padding: 18px;
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+    }
+
+    .quiz-question p {
+      font-weight: bold;
+      margin-top: 0;
+    }
+
+    .quiz-question label {
+      display: block;
+      margin: 10px 0;
+      color: #374151;
+      cursor: pointer;
+    }
+
+    .score-box {
+      margin-top: 24px;
+      padding: 16px;
+      border-radius: 12px;
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      font-weight: bold;
+    }
+
     footer {
       text-align: center;
       color: #6b7280;
@@ -193,10 +222,50 @@
 
     <div id="physik" class="section">
       <button class="back-btn" onclick="goHome()">← Zurück zur Startseite</button>
-      <h2>⚡ Physik</h2>
+      <h2>⚡ Physik – Elektromagnetische Wellen</h2>
       <p class="info-text">
-        Dieser Bereich ist vorbereitet. Hier können später Physik-Quizze, Wellen-Simulationen und digitale Arbeitsblätter ergänzt werden.
+        Beantworte die Fragen zu elektromagnetischen Wellen und überprüfe anschließend dein Ergebnis.
       </p>
+
+      <div class="quiz-question">
+        <p>1. Elektromagnetische Wellen benötigen zur Ausbreitung ...</p>
+        <label><input type="radio" name="q1" value="a"> ein Wasserbecken</label>
+        <label><input type="radio" name="q1" value="b"> ein Medium wie Luft oder Wasser</label>
+        <label><input type="radio" name="q1" value="c"> kein Medium</label>
+      </div>
+
+      <div class="quiz-question">
+        <p>2. Welche der folgenden Wellen gehört zu den elektromagnetischen Wellen?</p>
+        <label><input type="radio" name="q2" value="a"> Schallwellen</label>
+        <label><input type="radio" name="q2" value="b"> Lichtwellen</label>
+        <label><input type="radio" name="q2" value="c"> Wasserwellen</label>
+      </div>
+
+      <div class="quiz-question">
+        <p>3. Was haben alle elektromagnetischen Wellen gemeinsam?</p>
+        <label><input type="radio" name="q3" value="a"> Sie breiten sich im Vakuum mit Lichtgeschwindigkeit aus</label>
+        <label><input type="radio" name="q3" value="b"> Sie sind immer sichtbar</label>
+        <label><input type="radio" name="q3" value="c"> Sie brauchen Luft zur Ausbreitung</label>
+      </div>
+
+      <div class="quiz-question">
+        <p>4. Welche Aussage ist richtig?</p>
+        <label><input type="radio" name="q4" value="a"> Radiowellen haben eine kleinere Wellenlänge als Röntgenstrahlen</label>
+        <label><input type="radio" name="q4" value="b"> Röntgenstrahlen sind energiereicher als Radiowellen</label>
+        <label><input type="radio" name="q4" value="c"> Mikrowellen sind keine elektromagnetischen Wellen</label>
+      </div>
+
+      <div class="quiz-question">
+        <p>5. Welche Reihenfolge geht von niedriger zu höherer Frequenz?</p>
+        <label><input type="radio" name="q5" value="a"> Radiowellen → Mikrowellen → sichtbares Licht</label>
+        <label><input type="radio" name="q5" value="b"> sichtbares Licht → Mikrowellen → Radiowellen</label>
+        <label><input type="radio" name="q5" value="c"> UV-Strahlung → Infrarot → Radiowellen</label>
+      </div>
+
+      <button class="action-btn" onclick="physikAuswerten()">Quiz auswerten</button>
+      <button class="action-btn" onclick="physikZuruecksetzen()">Antworten löschen</button>
+
+      <div class="score-box" id="physikErgebnis"></div>
     </div>
 
     <div id="chemie" class="section">
@@ -255,6 +324,43 @@
       } else {
         document.getElementById("result").textContent = "❌ Noch einmal versuchen.";
       }
+    }
+
+    function physikAuswerten() {
+      let punkte = 0;
+
+      const loesungen = {
+        q1: "c",
+        q2: "b",
+        q3: "a",
+        q4: "b",
+        q5: "a"
+      };
+
+      for (let frage in loesungen) {
+        const auswahl = document.querySelector('input[name="' + frage + '"]:checked');
+        if (auswahl && auswahl.value === loesungen[frage]) {
+          punkte++;
+        }
+      }
+
+      let rueckmeldung = "Du hast " + punkte + " von 5 Punkten erreicht.";
+
+      if (punkte === 5) {
+        rueckmeldung += " ✅ Sehr stark!";
+      } else if (punkte >= 3) {
+        rueckmeldung += " 👍 Gut gemacht!";
+      } else {
+        rueckmeldung += " 📘 Schau dir das Thema noch einmal an.";
+      }
+
+      document.getElementById("physikErgebnis").textContent = rueckmeldung;
+    }
+
+    function physikZuruecksetzen() {
+      const radios = document.querySelectorAll('#physik input[type="radio"]');
+      radios.forEach(radio => radio.checked = false);
+      document.getElementById("physikErgebnis").textContent = "";
     }
   </script>
 
