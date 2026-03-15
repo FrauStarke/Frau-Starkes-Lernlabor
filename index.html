@@ -134,6 +134,7 @@ input[type="number"]{
   margin-top:15px;
   min-height:28px;
   font-weight:bold;
+  line-height:1.6;
 }
 
 canvas{
@@ -279,50 +280,141 @@ footer{
 
     <h2>⚡ Physik – Elektromagnetische Wellen</h2>
     <p class="info-text">
-      Hier findest du ein Quiz, eine Wellensimulation und ein interaktives elektromagnetisches Spektrum.
+      Hier findest du zwei Quizze, eine Wellensimulation und ein interaktives elektromagnetisches Spektrum.
     </p>
 
-    <h3>Quiz</h3>
+    <div class="task-box">
+      <h3>Kurzes Quiz (5 Fragen)</h3>
 
-    <div class="quiz-question">
-      <p>1. Elektromagnetische Wellen benötigen zur Ausbreitung ...</p>
-      <label><input type="radio" name="q1" value="a"> ein Medium</label>
-      <label><input type="radio" name="q1" value="b"> Wasser</label>
-      <label><input type="radio" name="q1" value="c"> kein Medium</label>
+      <div class="quiz-question">
+        <p>1. Elektromagnetische Wellen benötigen zur Ausbreitung ...</p>
+        <label><input type="radio" name="q1" value="a"> ein Medium</label>
+        <label><input type="radio" name="q1" value="b"> Wasser</label>
+        <label><input type="radio" name="q1" value="c"> kein Medium</label>
+      </div>
+
+      <div class="quiz-question">
+        <p>2. Welche Welle gehört zu den elektromagnetischen Wellen?</p>
+        <label><input type="radio" name="q2" value="a"> Schall</label>
+        <label><input type="radio" name="q2" value="b"> Licht</label>
+        <label><input type="radio" name="q2" value="c"> Wasserwellen</label>
+      </div>
+
+      <div class="quiz-question">
+        <p>3. Alle elektromagnetischen Wellen ...</p>
+        <label><input type="radio" name="q3" value="a"> bewegen sich im Vakuum mit Lichtgeschwindigkeit</label>
+        <label><input type="radio" name="q3" value="b"> sind sichtbar</label>
+        <label><input type="radio" name="q3" value="c"> brauchen Luft</label>
+      </div>
+
+      <div class="quiz-question">
+        <p>4. Welche Aussage stimmt?</p>
+        <label><input type="radio" name="q4" value="a"> Radiowellen sind energiereicher</label>
+        <label><input type="radio" name="q4" value="b"> Röntgenstrahlen sind energiereicher</label>
+        <label><input type="radio" name="q4" value="c"> Mikrowellen sind keine elektromagnetischen Wellen</label>
+      </div>
+
+      <div class="quiz-question">
+        <p>5. Welche Reihenfolge zeigt steigende Frequenz?</p>
+        <label><input type="radio" name="q5" value="a"> Radiowellen → Mikrowellen → Licht</label>
+        <label><input type="radio" name="q5" value="b"> Licht → Mikrowellen → Radiowellen</label>
+        <label><input type="radio" name="q5" value="c"> UV → Infrarot → Radiowellen</label>
+      </div>
+
+      <button onclick="physikAuswerten()">Kurzes Quiz auswerten</button>
+      <button onclick="physikZuruecksetzen()">Kurzes Quiz löschen</button>
+
+      <div id="physikErgebnis" class="result"></div>
     </div>
 
-    <div class="quiz-question">
-      <p>2. Welche Welle gehört zu den elektromagnetischen Wellen?</p>
-      <label><input type="radio" name="q2" value="a"> Schall</label>
-      <label><input type="radio" name="q2" value="b"> Licht</label>
-      <label><input type="radio" name="q2" value="c"> Wasserwellen</label>
+    <div class="task-box">
+      <h3>Großes Quiz: Elektromagnetische Wellen (10 Fragen)</h3>
+
+      <div class="quiz-question">
+        <p>1. Wie schnell breiten sich elektromagnetische Wellen im Vakuum aus?</p>
+        <label><input type="radio" name="q10_1" value="A"> 300 km/s</label>
+        <label><input type="radio" name="q10_1" value="B"> 3000 km/s</label>
+        <label><input type="radio" name="q10_1" value="C"> 300000 km/s</label>
+        <label><input type="radio" name="q10_1" value="D"> 3000000 km/s</label>
+      </div>
+
+      <div class="quiz-question">
+        <p>2. Welche Strahlung gehört nicht zum elektromagnetischen Spektrum?</p>
+        <label><input type="radio" name="q10_2" value="A"> Radiowellen</label>
+        <label><input type="radio" name="q10_2" value="B"> Schallwellen</label>
+        <label><input type="radio" name="q10_2" value="C"> Röntgenstrahlung</label>
+        <label><input type="radio" name="q10_2" value="D"> Mikrowellen</label>
+      </div>
+
+      <div class="quiz-question">
+        <p>3. Welcher Bereich des elektromagnetischen Spektrums ist für Menschen sichtbar?</p>
+        <label><input type="radio" name="q10_3" value="A"> Radiowellen</label>
+        <label><input type="radio" name="q10_3" value="B"> sichtbares Licht</label>
+        <label><input type="radio" name="q10_3" value="C"> Mikrowellen</label>
+        <label><input type="radio" name="q10_3" value="D"> Röntgenstrahlung</label>
+      </div>
+
+      <div class="quiz-question">
+        <p>4. Welche Strahlung hat die höchste Frequenz?</p>
+        <label><input type="radio" name="q10_4" value="A"> Radiowellen</label>
+        <label><input type="radio" name="q10_4" value="B"> sichtbares Licht</label>
+        <label><input type="radio" name="q10_4" value="C"> Röntgenstrahlung</label>
+        <label><input type="radio" name="q10_4" value="D"> Gammastrahlung</label>
+      </div>
+
+      <div class="quiz-question">
+        <p>5. Wofür wird ein Glasfaserkabel genutzt?</p>
+        <label><input type="radio" name="q10_5" value="A"> zur Stromübertragung</label>
+        <label><input type="radio" name="q10_5" value="B"> zur Datenübertragung mit Licht</label>
+        <label><input type="radio" name="q10_5" value="C"> zur Wärmeerzeugung</label>
+        <label><input type="radio" name="q10_5" value="D"> zur Schallerzeugung</label>
+      </div>
+
+      <div class="quiz-question">
+        <p>6. Warum sehen wir Radiowellen nicht?</p>
+        <label><input type="radio" name="q10_6" value="A"> Sie sind zu langsam</label>
+        <label><input type="radio" name="q10_6" value="B"> Unsere Augen können nur sichtbares Licht wahrnehmen</label>
+        <label><input type="radio" name="q10_6" value="C"> Radiowellen sind zu heiß</label>
+        <label><input type="radio" name="q10_6" value="D"> Sie breiten sich nicht im Raum aus</label>
+      </div>
+
+      <div class="quiz-question">
+        <p>7. Ein Radiosender sendet mit 99,2 MHz. Was bedeutet das?</p>
+        <label><input type="radio" name="q10_7" value="A"> 99,2 Schwingungen pro Sekunde</label>
+        <label><input type="radio" name="q10_7" value="B"> 99,2 Millionen Schwingungen pro Sekunde</label>
+        <label><input type="radio" name="q10_7" value="C"> 992 Millionen Schwingungen pro Sekunde</label>
+        <label><input type="radio" name="q10_7" value="D"> 9,92 Schwingungen pro Sekunde</label>
+      </div>
+
+      <div class="quiz-question">
+        <p>8. Welche elektromagnetische Strahlung nutzt ein Mikrowellenherd?</p>
+        <label><input type="radio" name="q10_8" value="A"> Radiowellen</label>
+        <label><input type="radio" name="q10_8" value="B"> Mikrowellen</label>
+        <label><input type="radio" name="q10_8" value="C"> Infrarotstrahlung</label>
+        <label><input type="radio" name="q10_8" value="D"> Röntgenstrahlung</label>
+      </div>
+
+      <div class="quiz-question">
+        <p>9. Welche Strahlung kann durch den menschlichen Körper dringen und wird in der Medizin genutzt?</p>
+        <label><input type="radio" name="q10_9" value="A"> Infrarotstrahlung</label>
+        <label><input type="radio" name="q10_9" value="B"> sichtbares Licht</label>
+        <label><input type="radio" name="q10_9" value="C"> Röntgenstrahlung</label>
+        <label><input type="radio" name="q10_9" value="D"> Radiowellen</label>
+      </div>
+
+      <div class="quiz-question">
+        <p>10. Was haben Sonnenlicht, WLAN und Handysignale gemeinsam?</p>
+        <label><input type="radio" name="q10_10" value="A"> Sie bestehen aus Elektronen</label>
+        <label><input type="radio" name="q10_10" value="B"> Sie sind elektromagnetische Wellen</label>
+        <label><input type="radio" name="q10_10" value="C"> Sie breiten sich unterschiedlich schnell aus</label>
+        <label><input type="radio" name="q10_10" value="D"> Sie können nur durch Kabel übertragen werden</label>
+      </div>
+
+      <button onclick="quiz10Auswerten()">Großes Quiz auswerten</button>
+      <button onclick="quiz10Zuruecksetzen()">Großes Quiz löschen</button>
+
+      <div id="quiz10Ergebnis" class="result"></div>
     </div>
-
-    <div class="quiz-question">
-      <p>3. Alle elektromagnetischen Wellen ...</p>
-      <label><input type="radio" name="q3" value="a"> bewegen sich im Vakuum mit Lichtgeschwindigkeit</label>
-      <label><input type="radio" name="q3" value="b"> sind sichtbar</label>
-      <label><input type="radio" name="q3" value="c"> brauchen Luft</label>
-    </div>
-
-    <div class="quiz-question">
-      <p>4. Welche Aussage stimmt?</p>
-      <label><input type="radio" name="q4" value="a"> Radiowellen sind energiereicher</label>
-      <label><input type="radio" name="q4" value="b"> Röntgenstrahlen sind energiereicher</label>
-      <label><input type="radio" name="q4" value="c"> Mikrowellen sind keine elektromagnetischen Wellen</label>
-    </div>
-
-    <div class="quiz-question">
-      <p>5. Welche Reihenfolge zeigt steigende Frequenz?</p>
-      <label><input type="radio" name="q5" value="a"> Radiowellen → Mikrowellen → Licht</label>
-      <label><input type="radio" name="q5" value="b"> Licht → Mikrowellen → Radiowellen</label>
-      <label><input type="radio" name="q5" value="c"> UV → Infrarot → Radiowellen</label>
-    </div>
-
-    <button onclick="physikAuswerten()">Quiz auswerten</button>
-    <button onclick="physikZuruecksetzen()">Antworten löschen</button>
-
-    <div id="physikErgebnis" class="result"></div>
 
     <div class="sim-box">
       <h3>🌊 Wellensimulation</h3>
@@ -460,13 +552,51 @@ function physikAuswerten(){
   }
 
   text += "<br><b>Punkte: " + punkte + " / 5</b>";
-
   document.getElementById("physikErgebnis").innerHTML = text;
 }
 
 function physikZuruecksetzen(){
-  document.querySelectorAll('#physik input[type="radio"]').forEach(r => r.checked = false);
+  document.querySelectorAll('#physik input[name="q1"], #physik input[name="q2"], #physik input[name="q3"], #physik input[name="q4"], #physik input[name="q5"]').forEach(r => r.checked = false);
   document.getElementById("physikErgebnis").innerHTML = "";
+}
+
+function quiz10Auswerten(){
+  const loesungen = {
+    q10_1:"C",
+    q10_2:"B",
+    q10_3:"B",
+    q10_4:"D",
+    q10_5:"B",
+    q10_6:"B",
+    q10_7:"B",
+    q10_8:"B",
+    q10_9:"C",
+    q10_10:"B"
+  };
+
+  let punkte = 0;
+  let text = "";
+
+  for(let q in loesungen){
+    let a = document.querySelector('input[name="' + q + '"]:checked');
+
+    if(a && a.value === loesungen[q]){
+      punkte++;
+      text += "Frage " + q.split("_")[1] + ": ✅ richtig<br>";
+    } else if(a){
+      text += "Frage " + q.split("_")[1] + ": ❌ falsch<br>";
+    } else {
+      text += "Frage " + q.split("_")[1] + ": ❌ keine Antwort<br>";
+    }
+  }
+
+  text += "<br><b>Punkte: " + punkte + " / 10</b>";
+  document.getElementById("quiz10Ergebnis").innerHTML = text;
+}
+
+function quiz10Zuruecksetzen(){
+  document.querySelectorAll('#physik input[name^="q10_"]').forEach(r => r.checked = false);
+  document.getElementById("quiz10Ergebnis").innerHTML = "";
 }
 
 const spectrumData = {
