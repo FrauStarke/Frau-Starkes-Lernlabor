@@ -3,30 +3,102 @@
 <head>
 <title>Frau Starkes Lernlabor</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <style>
+
 body{
-font-family: Arial;
+font-family: Arial, sans-serif;
 background:white;
 color:#222;
 text-align:center;
 padding:40px;
 }
+
+h1{
+font-size:42px;
+margin-bottom:10px;
+}
+
+.subtitle{
+color:#666;
+margin-bottom:40px;
+}
+
 button{
-padding:15px;
+padding:15px 25px;
 margin:10px;
 font-size:18px;
+border-radius:8px;
+border:1px solid #ccc;
+background:#f5f5f5;
+cursor:pointer;
 }
+
+button:hover{
+background:#eaeaea;
+}
+
+.quiz{
+margin-top:40px;
+}
+
+input{
+padding:10px;
+font-size:18px;
+width:120px;
+}
+
+#result{
+margin-top:20px;
+font-size:20px;
+}
+
 </style>
+
+<script>
+
+function checkAnswer(){
+
+let answer = document.getElementById("answer").value;
+
+if(answer == "336"){
+document.getElementById("result").innerHTML = "✅ Richtig!";
+}
+else{
+document.getElementById("result").innerHTML = "❌ Versuch es nochmal";
+}
+
+}
+
+</script>
+
 </head>
 
 <body>
 
 <h1>🔬 Frau Starkes Lernlabor</h1>
-<p>Interaktive Übungen für Mathematik und Physik</p>
+
+<p class="subtitle">Interaktive Übungen für Mathematik und Physik</p>
 
 <button>Mathe</button>
 <button>Physik</button>
 <button>Quiz</button>
+
+<div class="quiz">
+
+<h2>Kopfrechnen</h2>
+
+<p>48 × 7 = ?</p>
+
+<input id="answer" type="number">
+
+<br><br>
+
+<button onclick="checkAnswer()">Antwort prüfen</button>
+
+<div id="result"></div>
+
+</div>
 
 </body>
 </html>
