@@ -1,11 +1,56 @@
-<h1>Frau Starkes Lernlabor</h1>
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Frau Starkes Lernlabor</title>
 
-<p>Wähle ein Fach:</p>
+<style>
 
-<a href="physik/">⚡ Physik</a>
-<br><br>
+body{
+font-family: Arial;
+background:#f4f6f8;
+text-align:center;
+padding-top:60px;
+}
 
-<a href="mathe/">🧮 Mathe</a>
-<br><br>
+.container{
+display:flex;
+justify-content:center;
+gap:40px;
+}
 
-<a href="chemie/">🧪 Chemie</a>
+.card{
+background:white;
+padding:40px;
+border-radius:12px;
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
+width:200px;
+font-size:22px;
+text-decoration:none;
+color:#333;
+}
+
+.card:hover{
+transform:scale(1.05);
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>🔬 Frau Starkes Lernlabor</h1>
+
+<div class="container">
+
+<a class="card" href="physik/">⚡ Physik</a>
+
+<a class="card" href="mathe/">🧮 Mathe</a>
+
+<a class="card" href="chemie/">🧪 Chemie</a>
+
+</div>
+
+</body>
+</html>
