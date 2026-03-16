@@ -1,1 +1,231 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kopfrechnen – Frau Starkes Lernlabor</title>
 
+<style>
+body{
+  font-family:Arial, sans-serif;
+  margin:0;
+  background:#f6f8fb;
+  color:#1f2937;
+}
+
+nav{
+  background:white;
+  border-bottom:1px solid #dbe3ea;
+  padding:16px;
+  text-align:center;
+}
+
+nav a{
+  margin:0 12px;
+  text-decoration:none;
+  font-weight:bold;
+  color:#1f2937;
+}
+
+main{
+  max-width:900px;
+  margin:auto;
+  padding:40px 20px;
+  text-align:center;
+}
+
+.card{
+  background:white;
+  padding:30px;
+  border-radius:14px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.05);
+  border:1px solid #dbe3ea;
+}
+
+#aufgabe{
+  font-size:32px;
+  margin:20px 0;
+  font-weight:bold;
+}
+
+input{
+  padding:12px;
+  font-size:20px;
+  width:140px;
+  text-align:center;
+  border:1px solid #cbd5e1;
+  border-radius:10px;
+}
+
+button{
+  padding:10px 18px;
+  border:none;
+  background:#2563eb;
+  color:white;
+  border-radius:8px;
+  cursor:pointer;
+  margin:8px;
+  font-size:1rem;
+}
+
+button:hover{
+  background:#1d4ed8;
+}
+
+.info{
+  color:#4b5563;
+  margin-bottom:20px;
+}
+
+#ergebnis{
+  margin-top:20px;
+  font-weight:bold;
+  min-height:28px;
+}
+
+#stand{
+  margin-bottom:20px;
+  font-size:1.05rem;
+  color:#374151;
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="../">Start</a>
+  <a href="../physik/">Physik</a>
+  <a href="../Mathe/">Mathe</a>
+  <a href="../Chemie/">Chemie</a>
+</nav>
+
+<main>
+
+  <h1>🧮 Kopfrechentrainer</h1>
+  <p class="info">10 Aufgaben aus dem kleinen Einmaleins</p>
+
+  <div class="card">
+    <div id="stand">Aufgabe 1 von 10 | Punkte: 0</div>
+
+    <div id="aufgabe">Klicke auf „Start“</div>
+
+    <input id="antwort" type="number" placeholder="Antwort">
+
+    <div>
+      <button onclick="startTrainer()">Start</button>
+      <button onclick="pruefen()">Antwort prüfen</button>
+      <button onclick="naechsteAufgabe()">Nächste Aufgabe</button>
+    </div>
+
+    <div id="ergebnis"></div>
+  </div>
+
+</main>
+
+<script>
+let a = 0;
+let b = 0;
+let loesung = 0;
+let aktuelleAufgabe = 0;
+let punkte = 0;
+let gestartet = false;
+let beantwortet = false;
+const maxAufgaben = 10;
+
+function updateStand() {
+  document.getElementById("stand").innerText =
+    "Aufgabe " + aktuelleAufgabe + " von " + maxAufgaben + " | Punkte: " + punkte;
+}
+
+function startTrainer() {
+  aktuelleAufgabe = 1;
+  punkte = 0;
+  gestartet = true;
+  neueAufgabe();
+}
+
+function neueAufgabe() {
+  a = Math.floor(Math.random() * 10) + 1;
+  b = Math.floor(Math.random() * 10) + 1;
+  loesung = a * b;
+  beantwortet = false;
+
+  document.getElementById("aufgabe").innerText = a + " × " + b;
+  document.getElementById("antwort").value = "";
+  document.getElementById("ergebnis").innerText = "";
+  updateStand();
+}
+
+function pruefen() {
+  if (!gestartet) {
+    document.getElementById("ergebnis").innerText = "Bitte zuerst auf Start klicken.";
+    return;
+  }
+
+  if (beantwortet) {
+    document.getElementById("ergebnis").innerText = "Diese Aufgabe wurde schon geprüft. Klicke auf „Nächste Aufgabe“.";
+    return;
+  }
+
+  const eingabe = document.getElementById("antwort").value.trim();
+
+  if (eingabe === "") {
+    document.getElementById("ergebnis").innerText = "Bitte gib zuerst eine Antwort ein.";
+    return;
+  }
+
+  if (Number(eingabe) === loesung) {
+    punkte++;
+    document.getElementById("ergebnis").innerText = "✅ Richtig!";
+  } else {
+    document.getElementById("ergebnis").innerText = "❌ Leider falsch. Die Lösung ist " + loesung + ".";
+  }
+
+  beantwortet = true;
+  updateStand();
+}
+
+function naechsteAufgabe() {
+  if (!gestartet) {
+    document.getElementById("ergebnis").innerText = "Bitte zuerst auf Start klicken.";
+    return;
+  }
+
+  if (!beantwortet) {
+    document.getElementById("ergebnis").innerText = "Bitte prüfe zuerst deine Antwort.";
+    return;
+  }
+
+  if (aktuelleAufgabe >= maxAufgaben) {
+    zeigeEndergebnis();
+    return;
+  }
+
+  aktuelleAufgabe++;
+  neueAufgabe();
+}
+
+function zeigeEndergebnis() {
+  let rueckmeldung = "";
+
+  if (punkte === 10) {
+    rueckmeldung = "🌟 Perfekt! 10 von 10 Punkten.";
+  } else if (punkte >= 8) {
+    rueckmeldung = "👏 Sehr gut! " + punkte + " von 10 Punkten.";
+  } else if (punkte >= 5) {
+    rueckmeldung = "👍 Gut gemacht! " + punkte + " von 10 Punkten.";
+  } else {
+    rueckmeldung = "📘 " + punkte + " von 10 Punkten. Übe das Einmaleins noch einmal.";
+  }
+
+  document.getElementById("aufgabe").innerText = "Fertig!";
+  document.getElementById("ergebnis").innerText = rueckmeldung;
+  document.getElementById("stand").innerText =
+    "Endergebnis | Punkte: " + punkte + " von " + maxAufgaben;
+  document.getElementById("antwort").value = "";
+  gestartet = false;
+}
+</script>
+
+</body>
+</html>
