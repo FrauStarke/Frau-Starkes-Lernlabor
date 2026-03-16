@@ -1,53 +1,108 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mathe – Frau Starkes Lernlabor</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: #f6f8fb;
-      color: #1f2937;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mathe – Frau Starkes Lernlabor</title>
 
-    nav {
-      background: white;
-      border-bottom: 1px solid #dbe3ea;
-      padding: 16px 24px;
-      text-align: center;
-    }
+<style>
 
-    nav a {
-      margin: 0 14px;
-      text-decoration: none;
-      color: #1f2937;
-      font-weight: bold;
-    }
+body{
+font-family:Arial, sans-serif;
+margin:0;
+background:#f6f8fb;
+color:#1f2937;
+}
 
-    main {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 40px 20px;
-      text-align: center;
-    }
-  </style>
+nav{
+background:white;
+border-bottom:1px solid #dbe3ea;
+padding:16px 24px;
+text-align:center;
+}
+
+nav a{
+margin:0 14px;
+text-decoration:none;
+font-weight:bold;
+color:#1f2937;
+}
+
+header{
+text-align:center;
+padding:40px 20px 10px 20px;
+}
+
+.container{
+max-width:1000px;
+margin:0 auto;
+padding:30px 20px 50px 20px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:24px;
+margin-top:30px;
+}
+
+.card{
+display:block;
+background:white;
+border:1px solid #dbe3ea;
+border-radius:16px;
+padding:30px;
+text-decoration:none;
+color:#1f2937;
+box-shadow:0 4px 12px rgba(0,0,0,0.04);
+transition:transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card:hover{
+transform:translateY(-3px);
+box-shadow:0 8px 20px rgba(0,0,0,0.08);
+}
+
+.card h2{
+margin-top:0;
+margin-bottom:10px;
+}
+
+.card p{
+margin:0;
+color:#4b5563;
+line-height:1.5;
+}
+
+</style>
 </head>
+
 <body>
 
-  <nav>
-    <a href="../">Start</a>
-    <a href="../physik/">Physik</a>
-    <a href="../Mathe/">Mathe</a>
-    <a href="../Chemie/">Chemie</a>
-  </nav>
+<nav>
+<a href="../">Start</a>
+<a href="../physik/">Physik</a>
+<a href="../Mathe/">Mathe</a>
+<a href="../Chemie/">Chemie</a>
+</nav>
 
-  <main>
-    <h1>🧮 Mathe</h1>
-    <p>Hier entstehen die Mathe-Inhalte deines Lernlabors.</p>
-  </main>
-<a href="kopfrechnen.html">Kopfrechnen<a/>
-  
+<header>
+<h1>🧮 Mathematik</h1>
+<p>Übungen und Trainer</p>
+</header>
+
+<div class="container">
+
+<div class="grid">
+
+<a class="card" href="kopfrechnen.html">
+<h2>Kopfrechentrainer</h2>
+<p>10 Aufgaben aus dem kleinen Einmaleins mit Punkteauswertung.</p>
+</a>
+
+</div>
+
+</div>
+
 </body>
 </html>
