@@ -3,211 +3,569 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Elektromagnetische Wellen – Frau Starkes Lernlabor</title>
 
 <style>
-
 body{
-font-family:Arial;
-margin:0;
-background:#f6f8fb;
-color:#1f2937;
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#f6f8fb;
+  color:#1f2937;
 }
 
 nav{
-background:white;
-border-bottom:1px solid #dbe3ea;
-padding:16px;
-text-align:center;
+  background:white;
+  border-bottom:1px solid #dbe3ea;
+  padding:16px 24px;
+  text-align:center;
 }
 
 nav a{
-margin:0 12px;
-text-decoration:none;
-font-weight:bold;
-color:#1f2937;
+  margin:0 14px;
+  text-decoration:none;
+  color:#1f2937;
+  font-weight:bold;
 }
 
 main{
-max-width:950px;
-margin:auto;
-padding:40px 20px;
+  max-width:1100px;
+  margin:0 auto;
+  padding:30px 20px 50px 20px;
+}
+
+h1{
+  margin-top:0;
 }
 
 .card{
-background:white;
-padding:30px;
-border-radius:14px;
-margin-bottom:30px;
-box-shadow:0 4px 10px rgba(0,0,0,0.05);
+  background:white;
+  border:1px solid #dbe3ea;
+  border-radius:16px;
+  padding:24px;
+  margin-bottom:24px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.04);
 }
 
-canvas{
-background:#eef2f7;
-border-radius:10px;
+.info-text{
+  color:#4b5563;
+  line-height:1.6;
+}
+
+.quiz-question{
+  margin-top:18px;
+  padding:15px;
+  background:#f8fafc;
+  border-radius:10px;
+  border:1px solid #e5e7eb;
+}
+
+.quiz-question label{
+  display:block;
+  margin:6px 0;
+  cursor:pointer;
+}
+
+.result{
+  margin-top:15px;
+  min-height:28px;
+  font-weight:bold;
+  line-height:1.6;
 }
 
 button{
-padding:10px 16px;
-border:none;
-background:#2563eb;
-color:white;
-border-radius:8px;
-cursor:pointer;
+  padding:10px 18px;
+  margin:8px 8px 8px 0;
+  border-radius:10px;
+  border:1px solid #cbd5e1;
+  background:white;
+  cursor:pointer;
+  font-size:1rem;
 }
 
 button:hover{
-background:#1d4ed8;
+  background:#f3f4f6;
 }
 
+canvas{
+  background:white;
+  border:1px solid #dbe3ea;
+  border-radius:10px;
+  margin-top:15px;
+  width:100%;
+  max-width:760px;
+  display:block;
+}
+
+.slider-row{
+  margin-top:14px;
+}
+
+.slider-row label{
+  display:inline-block;
+  width:120px;
+}
+
+.slider-row input[type="range"]{
+  width:220px;
+  max-width:100%;
+  vertical-align:middle;
+}
+
+.spectrum-bar{
+  display:grid;
+  grid-template-columns:1.5fr 1.3fr 1.1fr 1fr 0.9fr 0.9fr 0.8fr;
+  gap:6px;
+  margin-top:16px;
+}
+
+.spectrum-item{
+  border:none;
+  border-radius:12px;
+  padding:14px 10px;
+  font-weight:bold;
+  cursor:pointer;
+  transition:transform 0.12s ease, box-shadow 0.12s ease;
+  color:#111827;
+}
+
+.spectrum-item:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 16px rgba(0,0,0,0.10);
+}
+
+.radio{background:#dbeafe;}
+.mikro{background:#bfdbfe;}
+.ir{background:#fde68a;}
+.visible{background:linear-gradient(90deg,#ef4444,#f59e0b,#eab308,#22c55e,#3b82f6,#8b5cf6);}
+.uv{background:#c4b5fd;}
+.xray{background:#fecdd3;}
+.gamma{background:#fca5a5;}
+
+.spectrum-info{
+  margin-top:18px;
+  background:white;
+  border:1px solid #dbe3ea;
+  border-radius:12px;
+  padding:16px;
+  min-height:120px;
+}
+
+.spectrum-meta{
+  margin-top:10px;
+  color:#4b5563;
+}
+
+.small{
+  font-size:0.95rem;
+  color:#6b7280;
+}
+
+@media (max-width:800px){
+  .spectrum-bar{
+    grid-template-columns:1fr;
+  }
+
+  .slider-row label{
+    display:block;
+    width:auto;
+    margin-bottom:6px;
+  }
+}
 </style>
 </head>
-
 <body>
 
 <nav>
-<a href="../">Start</a>
-<a href="./">Physik</a>
-<a href="klasse10.html">Klasse 10</a>
-<a href="../Mathe/">Mathe</a>
-<a href="../Chemie/">Chemie</a>
+  <a href="../">Start</a>
+  <a href="./">Physik</a>
+  <a href="klasse10.html">Klasse 10</a>
+  <a href="../Mathe/">Mathe</a>
+  <a href="../Chemie/">Chemie</a>
 </nav>
 
 <main>
 
-<h1>⚡ Elektromagnetische Wellen</h1>
+  <h1>⚡ Elektromagnetische Wellen</h1>
+  <p class="info-text">
+    Hier findest du zwei Quizze, eine Wellensimulation und ein interaktives elektromagnetisches Spektrum.
+  </p>
 
-<!-- WELLENSIMULATION -->
+  <div class="card">
+    <h2>Kurzes Quiz (5 Fragen)</h2>
 
-<div class="card">
+    <div class="quiz-question">
+      <p>1. Elektromagnetische Wellen benötigen zur Ausbreitung ...</p>
+      <label><input type="radio" name="q1" value="a"> ein Medium</label>
+      <label><input type="radio" name="q1" value="b"> Wasser</label>
+      <label><input type="radio" name="q1" value="c"> kein Medium</label>
+    </div>
 
-<h2>🌊 Wellensimulation</h2>
+    <div class="quiz-question">
+      <p>2. Welche Welle gehört zu den elektromagnetischen Wellen?</p>
+      <label><input type="radio" name="q2" value="a"> Schall</label>
+      <label><input type="radio" name="q2" value="b"> Licht</label>
+      <label><input type="radio" name="q2" value="c"> Wasserwellen</label>
+    </div>
 
-<canvas id="waveCanvas" width="700" height="200"></canvas>
+    <div class="quiz-question">
+      <p>3. Alle elektromagnetischen Wellen ...</p>
+      <label><input type="radio" name="q3" value="a"> bewegen sich im Vakuum mit Lichtgeschwindigkeit</label>
+      <label><input type="radio" name="q3" value="b"> sind sichtbar</label>
+      <label><input type="radio" name="q3" value="c"> brauchen Luft</label>
+    </div>
 
-<br><br>
+    <div class="quiz-question">
+      <p>4. Welche Aussage stimmt?</p>
+      <label><input type="radio" name="q4" value="a"> Radiowellen sind energiereicher</label>
+      <label><input type="radio" name="q4" value="b"> Röntgenstrahlen sind energiereicher</label>
+      <label><input type="radio" name="q4" value="c"> Mikrowellen sind keine elektromagnetischen Wellen</label>
+    </div>
 
-Amplitude
-<input type="range" id="amp" min="10" max="80" value="40">
+    <div class="quiz-question">
+      <p>5. Welche Reihenfolge zeigt steigende Frequenz?</p>
+      <label><input type="radio" name="q5" value="a"> Radiowellen → Mikrowellen → Licht</label>
+      <label><input type="radio" name="q5" value="b"> Licht → Mikrowellen → Radiowellen</label>
+      <label><input type="radio" name="q5" value="c"> UV → Infrarot → Radiowellen</label>
+    </div>
 
-Wellenlänge
-<input type="range" id="wave" min="20" max="150" value="80">
+    <button onclick="physikAuswerten()">Kurzes Quiz auswerten</button>
+    <button onclick="physikZuruecksetzen()">Kurzes Quiz löschen</button>
 
-</div>
+    <div id="physikErgebnis" class="result"></div>
+  </div>
 
-<!-- SPEKTRUM -->
+  <div class="card">
+    <h2>Großes Quiz: Elektromagnetische Wellen (10 Fragen)</h2>
 
-<div class="card">
+    <div class="quiz-question">
+      <p>1. Wie schnell breiten sich elektromagnetische Wellen im Vakuum aus?</p>
+      <label><input type="radio" name="q10_1" value="A"> 300 km/s</label>
+      <label><input type="radio" name="q10_1" value="B"> 3000 km/s</label>
+      <label><input type="radio" name="q10_1" value="C"> 300000 km/s</label>
+      <label><input type="radio" name="q10_1" value="D"> 3000000 km/s</label>
+    </div>
 
-<h2>📡 Elektromagnetisches Spektrum</h2>
+    <div class="quiz-question">
+      <p>2. Welche Strahlung gehört nicht zum elektromagnetischen Spektrum?</p>
+      <label><input type="radio" name="q10_2" value="A"> Radiowellen</label>
+      <label><input type="radio" name="q10_2" value="B"> Schallwellen</label>
+      <label><input type="radio" name="q10_2" value="C"> Röntgenstrahlung</label>
+      <label><input type="radio" name="q10_2" value="D"> Mikrowellen</label>
+    </div>
 
-<p>Klicke auf einen Bereich:</p>
+    <div class="quiz-question">
+      <p>3. Welcher Bereich des elektromagnetischen Spektrums ist für Menschen sichtbar?</p>
+      <label><input type="radio" name="q10_3" value="A"> Radiowellen</label>
+      <label><input type="radio" name="q10_3" value="B"> sichtbares Licht</label>
+      <label><input type="radio" name="q10_3" value="C"> Mikrowellen</label>
+      <label><input type="radio" name="q10_3" value="D"> Röntgenstrahlung</label>
+    </div>
 
-<button onclick="info('Radiowellen: z.B. Radio, WLAN')">Radiowellen</button>
+    <div class="quiz-question">
+      <p>4. Welche Strahlung hat die höchste Frequenz?</p>
+      <label><input type="radio" name="q10_4" value="A"> Radiowellen</label>
+      <label><input type="radio" name="q10_4" value="B"> sichtbares Licht</label>
+      <label><input type="radio" name="q10_4" value="C"> Röntgenstrahlung</label>
+      <label><input type="radio" name="q10_4" value="D"> Gammastrahlung</label>
+    </div>
 
-<button onclick="info('Mikrowellen: z.B. Mikrowellenherd')">Mikrowellen</button>
+    <div class="quiz-question">
+      <p>5. Wofür wird ein Glasfaserkabel genutzt?</p>
+      <label><input type="radio" name="q10_5" value="A"> zur Stromübertragung</label>
+      <label><input type="radio" name="q10_5" value="B"> zur Datenübertragung mit Licht</label>
+      <label><input type="radio" name="q10_5" value="C"> zur Wärmeerzeugung</label>
+      <label><input type="radio" name="q10_5" value="D"> zur Schallerzeugung</label>
+    </div>
 
-<button onclick="info('Infrarot: Wärmestrahlung')">Infrarot</button>
+    <div class="quiz-question">
+      <p>6. Warum sehen wir Radiowellen nicht?</p>
+      <label><input type="radio" name="q10_6" value="A"> Sie sind zu langsam</label>
+      <label><input type="radio" name="q10_6" value="B"> Unsere Augen können nur sichtbares Licht wahrnehmen</label>
+      <label><input type="radio" name="q10_6" value="C"> Radiowellen sind zu heiß</label>
+      <label><input type="radio" name="q10_6" value="D"> Sie breiten sich nicht im Raum aus</label>
+    </div>
 
-<button onclick="info('Sichtbares Licht: das sehen wir')">Licht</button>
+    <div class="quiz-question">
+      <p>7. Ein Radiosender sendet mit 99,2 MHz. Was bedeutet das?</p>
+      <label><input type="radio" name="q10_7" value="A"> 99,2 Schwingungen pro Sekunde</label>
+      <label><input type="radio" name="q10_7" value="B"> 99,2 Millionen Schwingungen pro Sekunde</label>
+      <label><input type="radio" name="q10_7" value="C"> 992 Millionen Schwingungen pro Sekunde</label>
+      <label><input type="radio" name="q10_7" value="D"> 9,92 Schwingungen pro Sekunde</label>
+    </div>
 
-<button onclick="info('UV-Strahlung: Sonne')">UV</button>
+    <div class="quiz-question">
+      <p>8. Welche elektromagnetische Strahlung nutzt ein Mikrowellenherd?</p>
+      <label><input type="radio" name="q10_8" value="A"> Radiowellen</label>
+      <label><input type="radio" name="q10_8" value="B"> Mikrowellen</label>
+      <label><input type="radio" name="q10_8" value="C"> Infrarotstrahlung</label>
+      <label><input type="radio" name="q10_8" value="D"> Röntgenstrahlung</label>
+    </div>
 
-<button onclick="info('Röntgenstrahlung: Medizin')">Röntgen</button>
+    <div class="quiz-question">
+      <p>9. Welche Strahlung kann durch den menschlichen Körper dringen und wird in der Medizin genutzt?</p>
+      <label><input type="radio" name="q10_9" value="A"> Infrarotstrahlung</label>
+      <label><input type="radio" name="q10_9" value="B"> sichtbares Licht</label>
+      <label><input type="radio" name="q10_9" value="C"> Röntgenstrahlung</label>
+      <label><input type="radio" name="q10_9" value="D"> Radiowellen</label>
+    </div>
 
-<button onclick="info('Gammastrahlung: höchste Energie')">Gamma</button>
+    <div class="quiz-question">
+      <p>10. Was haben Sonnenlicht, WLAN und Handysignale gemeinsam?</p>
+      <label><input type="radio" name="q10_10" value="A"> Sie bestehen aus Elektronen</label>
+      <label><input type="radio" name="q10_10" value="B"> Sie sind elektromagnetische Wellen</label>
+      <label><input type="radio" name="q10_10" value="C"> Sie breiten sich unterschiedlich schnell aus</label>
+      <label><input type="radio" name="q10_10" value="D"> Sie können nur durch Kabel übertragen werden</label>
+    </div>
 
-<p id="spektrumInfo"></p>
+    <button onclick="quiz10Auswerten()">Großes Quiz auswerten</button>
+    <button onclick="quiz10Zuruecksetzen()">Großes Quiz löschen</button>
 
-</div>
+    <div id="quiz10Ergebnis" class="result"></div>
+  </div>
 
-<!-- QUIZ -->
+  <div class="card">
+    <h2>🌊 Wellensimulation</h2>
+    <p class="info-text">
+      Verändere Amplitude, Wellenlänge und Geschwindigkeit.
+    </p>
 
-<div class="card">
+    <canvas id="waveCanvas" width="760" height="260"></canvas>
 
-<h2>🧠 Quiz Elektromagnetische Wellen</h2>
+    <div class="slider-row">
+      <label for="amplitude">Amplitude</label>
+      <input id="amplitude" type="range" min="10" max="100" value="40">
+      <span id="ampValue">40</span>
+    </div>
 
-<p>1. Wie schnell breiten sich elektromagnetische Wellen im Vakuum aus?</p>
+    <div class="slider-row">
+      <label for="wavelength">Wellenlänge</label>
+      <input id="wavelength" type="range" min="50" max="300" value="150">
+      <span id="waveValue">150</span>
+    </div>
 
-<button onclick="check(1,'c')">300 km/s</button>
+    <div class="slider-row">
+      <label for="speed">Geschwindigkeit</label>
+      <input id="speed" type="range" min="1" max="10" value="3">
+      <span id="speedValue">3</span>
+    </div>
 
-<button onclick="check(1,'c')">3000 km/s</button>
+    <p class="small">
+      Große Wellenlänge = Wellenberge weiter auseinander. Große Amplitude = größere Auslenkung.
+    </p>
+  </div>
 
-<button onclick="check(1,'r')">300000 km/s</button>
+  <div class="card">
+    <h2>📡 Interaktives elektromagnetisches Spektrum</h2>
+    <p class="info-text">
+      Klicke auf einen Bereich des Spektrums.
+    </p>
 
-<button onclick="check(1,'c')">3000000 km/s</button>
+    <div class="spectrum-bar">
+      <button class="spectrum-item radio" onclick="showSpectrumInfo('radio')">Radiowellen</button>
+      <button class="spectrum-item mikro" onclick="showSpectrumInfo('mikro')">Mikrowellen</button>
+      <button class="spectrum-item ir" onclick="showSpectrumInfo('ir')">Infrarot</button>
+      <button class="spectrum-item visible" onclick="showSpectrumInfo('visible')">sichtbares Licht</button>
+      <button class="spectrum-item uv" onclick="showSpectrumInfo('uv')">UV</button>
+      <button class="spectrum-item xray" onclick="showSpectrumInfo('xray')">Röntgen</button>
+      <button class="spectrum-item gamma" onclick="showSpectrumInfo('gamma')">Gamma</button>
+    </div>
 
-<p id="q1"></p>
-
-<br>
-
-<p>2. Welche Strahlung gehört nicht zum elektromagnetischen Spektrum?</p>
-
-<button onclick="check(2,'c')">Radiowellen</button>
-
-<button onclick="check(2,'r')">Schallwellen</button>
-
-<button onclick="check(2,'c')">Röntgen</button>
-
-<button onclick="check(2,'c')">Mikrowellen</button>
-
-<p id="q2"></p>
-
-</div>
+    <div id="spectrumInfo" class="spectrum-info">
+      <strong>Elektromagnetisches Spektrum</strong>
+      <p>Klicke oben auf einen Bereich, um Informationen zu Frequenz, Wellenlänge und Verwendung zu sehen.</p>
+    </div>
+  </div>
 
 </main>
 
 <script>
+function physikAuswerten(){
+  const loesungen = {
+    q1:"c",
+    q2:"b",
+    q3:"a",
+    q4:"b",
+    q5:"a"
+  };
 
-/* WELLENSIMULATION */
+  const erklaerung = {
+    q1:"Elektromagnetische Wellen können sich auch im Vakuum ausbreiten.",
+    q2:"Licht ist eine elektromagnetische Welle.",
+    q3:"Alle elektromagnetischen Wellen bewegen sich im Vakuum mit Lichtgeschwindigkeit.",
+    q4:"Röntgenstrahlen sind energiereicher als Radiowellen.",
+    q5:"Radiowellen haben die niedrigste Frequenz, danach kommen Mikrowellen und dann sichtbares Licht."
+  };
 
-const canvas = document.getElementById("waveCanvas")
-const ctx = canvas.getContext("2d")
+  let punkte = 0;
+  let text = "";
 
-let amp = document.getElementById("amp")
-let wave = document.getElementById("wave")
+  for(let q in loesungen){
+    let auswahl = document.querySelector('input[name="' + q + '"]:checked');
 
-function draw(){
+    if(auswahl && auswahl.value === loesungen[q]){
+      punkte++;
+      text += "Frage " + q[1] + ": ✅ richtig<br>";
+    } else if(auswahl){
+      text += "Frage " + q[1] + ": ❌ falsch – " + erklaerung[q] + "<br>";
+    } else {
+      text += "Frage " + q[1] + ": ❌ nicht beantwortet – " + erklaerung[q] + "<br>";
+    }
+  }
 
-ctx.clearRect(0,0,canvas.width,canvas.height)
-
-ctx.beginPath()
-
-for(let x=0;x<canvas.width;x++){
-
-let y = 100 + Math.sin(x/wave.value)*amp.value
-
-ctx.lineTo(x,y)
-
+  text += "<br><b>Punkte: " + punkte + " / 5</b>";
+  document.getElementById("physikErgebnis").innerHTML = text;
 }
 
-ctx.stroke()
-
-requestAnimationFrame(draw)
-
+function physikZuruecksetzen(){
+  document.querySelectorAll('input[name="q1"], input[name="q2"], input[name="q3"], input[name="q4"], input[name="q5"]').forEach(r => r.checked = false);
+  document.getElementById("physikErgebnis").innerHTML = "";
 }
 
-draw()
+function quiz10Auswerten(){
+  const loesungen = {
+    q10_1:"C",
+    q10_2:"B",
+    q10_3:"B",
+    q10_4:"D",
+    q10_5:"B",
+    q10_6:"B",
+    q10_7:"B",
+    q10_8:"B",
+    q10_9:"C",
+    q10_10:"B"
+  };
 
-/* SPEKTRUM */
+  let punkte = 0;
+  let text = "";
 
-function info(text){
+  for(let q in loesungen){
+    let a = document.querySelector('input[name="' + q + '"]:checked');
 
-document.getElementById("spektrumInfo").innerText=text
+    if(a && a.value === loesungen[q]){
+      punkte++;
+      text += "Frage " + q.split("_")[1] + ": ✅ richtig<br>";
+    } else if(a){
+      text += "Frage " + q.split("_")[1] + ": ❌ falsch<br>";
+    } else {
+      text += "Frage " + q.split("_")[1] + ": ❌ keine Antwort<br>";
+    }
+  }
 
+  text += "<br><b>Punkte: " + punkte + " / 10</b>";
+  document.getElementById("quiz10Ergebnis").innerHTML = text;
 }
 
-/* QUIZ */
-
-function check(q,result){
-
-let text = result==="r" ? "Richtig!" : "Leider falsch."
-
-document.getElementById("q"+q).innerText=text
-
+function quiz10Zuruecksetzen(){
+  document.querySelectorAll('input[name^="q10_"]').forEach(r => r.checked = false);
+  document.getElementById("quiz10Ergebnis").innerHTML = "";
 }
 
+const spectrumData = {
+  radio: {
+    title: "📻 Radiowellen",
+    text: "Radiowellen haben die größte Wellenlänge und die niedrigste Frequenz im elektromagnetischen Spektrum.",
+    meta: "Verwendung: Radio, Funk, Kommunikation"
+  },
+  mikro: {
+    title: "📶 Mikrowellen",
+    text: "Mikrowellen haben kürzere Wellenlängen als Radiowellen. Sie werden unter anderem in der Kommunikation und in Mikrowellengeräten genutzt.",
+    meta: "Verwendung: WLAN, Radar, Mikrowelle"
+  },
+  ir: {
+    title: "🌡️ Infrarot",
+    text: "Infrarotstrahlung ist für das menschliche Auge unsichtbar und wird oft als Wärmestrahlung wahrgenommen.",
+    meta: "Verwendung: Wärmekameras, Fernbedienungen"
+  },
+  visible: {
+    title: "🌈 Sichtbares Licht",
+    text: "Dieser kleine Bereich des Spektrums ist für den Menschen sichtbar. Er reicht von Rot bis Violett.",
+    meta: "Verwendung: Sehen, Beleuchtung, Optik"
+  },
+  uv: {
+    title: "☀️ Ultraviolett",
+    text: "UV-Strahlung hat eine höhere Frequenz als sichtbares Licht. Zu viel UV-Strahlung kann Haut und Augen schädigen.",
+    meta: "Verwendung: Desinfektion, Schwarzlicht"
+  },
+  xray: {
+    title: "🩻 Röntgenstrahlung",
+    text: "Röntgenstrahlen sind sehr energiereich und können viele Stoffe durchdringen.",
+    meta: "Verwendung: Medizinische Bildgebung"
+  },
+  gamma: {
+    title: "☢️ Gammastrahlung",
+    text: "Gammastrahlung besitzt die höchste Frequenz und die größte Energie im elektromagnetischen Spektrum.",
+    meta: "Verwendung: Strahlentherapie, Kernphysik"
+  }
+};
+
+function showSpectrumInfo(key){
+  const info = spectrumData[key];
+  document.getElementById("spectrumInfo").innerHTML =
+    "<strong>" + info.title + "</strong>" +
+    "<p>" + info.text + "</p>" +
+    "<div class='spectrum-meta'>" + info.meta + "</div>";
+}
+
+const canvas = document.getElementById("waveCanvas");
+const ctx = canvas.getContext("2d");
+
+const amplitudeSlider = document.getElementById("amplitude");
+const wavelengthSlider = document.getElementById("wavelength");
+const speedSlider = document.getElementById("speed");
+
+const ampValue = document.getElementById("ampValue");
+const waveValue = document.getElementById("waveValue");
+const speedValue = document.getElementById("speedValue");
+
+let phase = 0;
+
+function updateSliderLabels(){
+  ampValue.textContent = amplitudeSlider.value;
+  waveValue.textContent = wavelengthSlider.value;
+  speedValue.textContent = speedSlider.value;
+}
+
+amplitudeSlider.addEventListener("input", updateSliderLabels);
+wavelengthSlider.addEventListener("input", updateSliderLabels);
+speedSlider.addEventListener("input", updateSliderLabels);
+
+function drawWave(){
+  const amplitude = Number(amplitudeSlider.value);
+  const wavelength = Number(wavelengthSlider.value);
+  const speed = Number(speedSlider.value);
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  ctx.strokeStyle = "#cbd5e1";
+  ctx.lineWidth = 1;
+
+  ctx.beginPath();
+  ctx.moveTo(0, canvas.height / 2);
+  ctx.lineTo(canvas.width, canvas.height / 2);
+  ctx.stroke();
+
+  ctx.strokeStyle = "#2563eb";
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+
+  for(let x = 0; x < canvas.width; x++){
+    const y = canvas.height / 2 + amplitude * Math.sin((2 * Math.PI * x) / wavelength + phase);
+
+    if(x === 0){
+      ctx.moveTo(x, y);
+    } else {
+      ctx.lineTo(x, y);
+    }
+  }
+
+  ctx.stroke();
+
+  phase += speed * 0.04;
+  requestAnimationFrame(drawWave);
+}
+
+updateSliderLabels();
+drawWave();
 </script>
 
 </body>
