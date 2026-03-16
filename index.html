@@ -1,56 +1,120 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<title>Frau Starkes Lernlabor</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Frau Starkes Lernlabor</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f6f8fb;
+      color: #1f2937;
+    }
 
-<style>
+    nav {
+      background: white;
+      border-bottom: 1px solid #dbe3ea;
+      padding: 16px 24px;
+      text-align: center;
+    }
 
-body{
-font-family: Arial;
-background:#f4f6f8;
-text-align:center;
-padding-top:60px;
-}
+    nav a {
+      margin: 0 14px;
+      text-decoration: none;
+      color: #1f2937;
+      font-weight: bold;
+    }
 
-.container{
-display:flex;
-justify-content:center;
-gap:40px;
-}
+    header {
+      text-align: center;
+      padding: 50px 20px 20px 20px;
+    }
 
-.card{
-background:white;
-padding:40px;
-border-radius:12px;
-box-shadow:0 4px 10px rgba(0,0,0,0.1);
-width:200px;
-font-size:22px;
-text-decoration:none;
-color:#333;
-}
+    h1 {
+      margin: 0;
+      font-size: 2.4rem;
+    }
 
-.card:hover{
-transform:scale(1.05);
-}
+    .subtitle {
+      margin-top: 10px;
+      color: #6b7280;
+    }
 
-</style>
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 30px 20px 50px 20px;
+    }
 
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+      margin-top: 30px;
+    }
+
+    .card {
+      display: block;
+      background: white;
+      border: 1px solid #dbe3ea;
+      border-radius: 16px;
+      padding: 30px;
+      text-decoration: none;
+      color: #1f2937;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+
+    .card h2 {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      margin: 0;
+      color: #4b5563;
+      line-height: 1.5;
+    }
+  </style>
 </head>
-
 <body>
 
-<h1>🔬 Frau Starkes Lernlabor</h1>
+  <nav>
+    <a href="./">Start</a>
+    <a href="physik/">Physik</a>
+    <a href="Mathe/">Mathe</a>
+    <a href="Chemie/">Chemie</a>
+  </nav>
 
-<div class="container">
+  <header>
+    <h1>🔬 Frau Starkes Lernlabor</h1>
+    <div class="subtitle">Interaktive Übungen für Mathematik, Physik und Chemie</div>
+  </header>
 
-<a class="card" href="physik/">⚡ Physik</a>
+  <div class="container">
+    <div class="grid">
+      <a class="card" href="physik/">
+        <h2>⚡ Physik</h2>
+        <p>Quizze, Simulationen und digitale Arbeitsblätter.</p>
+      </a>
 
-<a class="card" href="mathe/">🧮 Mathe</a>
+      <a class="card" href="Mathe/">
+        <h2>🧮 Mathe</h2>
+        <p>Kopfrechnen, Einmaleins und weitere interaktive Übungen.</p>
+      </a>
 
-<a class="card" href="chemie/">🧪 Chemie</a>
-
-</div>
+      <a class="card" href="Chemie/">
+        <h2>🧪 Chemie</h2>
+        <p>Grundlagen, Stoffe und spätere Chemie-Module.</p>
+      </a>
+    </div>
+  </div>
 
 </body>
 </html>
