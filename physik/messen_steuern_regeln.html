@@ -1,1 +1,39 @@
+<h2>🎯 Interaktive Übung</h2>
 
+<p>Ordne zu: Messen, Steuern oder Regeln</p>
+
+<div>
+<p>Ein Thermometer zeigt 20°C an:</p>
+<button onclick="antwort('messen',1)">Messen</button>
+<button onclick="antwort('falsch',1)">Steuern</button>
+<button onclick="antwort('falsch',1)">Regeln</button>
+<p id="a1"></p>
+</div>
+
+<div>
+<p>Ein Lichtschalter wird gedrückt:</p>
+<button onclick="antwort('falsch',2)">Messen</button>
+<button onclick="antwort('steuern',2)">Steuern</button>
+<button onclick="antwort('falsch',2)">Regeln</button>
+<p id="a2"></p>
+</div>
+
+<div>
+<p>Ein Bügeleisen hält die Temperatur konstant:</p>
+<button onclick="antwort('falsch',3)">Messen</button>
+<button onclick="antwort('falsch',3)">Steuern</button>
+<button onclick="antwort('regeln',3)">Regeln</button>
+<p id="a3"></p>
+</div>
+
+<script>
+function antwort(type,nr){
+let text = "❌ Falsch";
+
+if(type==="messen") text="✅ Richtig (Messen)";
+if(type==="steuern") text="✅ Richtig (Steuern)";
+if(type==="regeln") text="✅ Richtig (Regeln)";
+
+document.getElementById("a"+nr).innerText = text;
+}
+</script>
