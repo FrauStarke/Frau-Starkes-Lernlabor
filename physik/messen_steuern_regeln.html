@@ -1,39 +1,492 @@
-<h2>🎯 Interaktive Übung</h2>
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Messen, Steuern, Regeln – Frau Starkes Lernlabor</title>
 
-<p>Ordne zu: Messen, Steuern oder Regeln</p>
+<style>
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#f6f8fb;
+  color:#1f2937;
+}
 
-<div>
-<p>Ein Thermometer zeigt 20°C an:</p>
-<button onclick="antwort('messen',1)">Messen</button>
-<button onclick="antwort('falsch',1)">Steuern</button>
-<button onclick="antwort('falsch',1)">Regeln</button>
-<p id="a1"></p>
-</div>
+nav{
+  background:white;
+  border-bottom:1px solid #dbe3ea;
+  padding:16px 24px;
+  text-align:center;
+}
 
-<div>
-<p>Ein Lichtschalter wird gedrückt:</p>
-<button onclick="antwort('falsch',2)">Messen</button>
-<button onclick="antwort('steuern',2)">Steuern</button>
-<button onclick="antwort('falsch',2)">Regeln</button>
-<p id="a2"></p>
-</div>
+nav a{
+  margin:0 14px;
+  text-decoration:none;
+  color:#1f2937;
+  font-weight:bold;
+}
 
-<div>
-<p>Ein Bügeleisen hält die Temperatur konstant:</p>
-<button onclick="antwort('falsch',3)">Messen</button>
-<button onclick="antwort('falsch',3)">Steuern</button>
-<button onclick="antwort('regeln',3)">Regeln</button>
-<p id="a3"></p>
-</div>
+main{
+  max-width:1000px;
+  margin:0 auto;
+  padding:30px 20px 50px 20px;
+}
+
+.card{
+  background:white;
+  border:1px solid #dbe3ea;
+  border-radius:16px;
+  padding:24px;
+  margin-bottom:24px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.04);
+}
+
+.info-text{
+  color:#4b5563;
+  line-height:1.6;
+}
+
+.quiz-question{
+  margin-top:18px;
+  padding:15px;
+  background:#f8fafc;
+  border-radius:10px;
+  border:1px solid #e5e7eb;
+}
+
+.quiz-question label{
+  display:block;
+  margin:6px 0;
+  cursor:pointer;
+}
+
+.result{
+  margin-top:15px;
+  min-height:28px;
+  font-weight:bold;
+  line-height:1.6;
+}
+
+button{
+  padding:10px 18px;
+  margin:8px 8px 8px 0;
+  border-radius:10px;
+  border:1px solid #cbd5e1;
+  background:white;
+  cursor:pointer;
+  font-size:1rem;
+}
+
+button:hover{
+  background:#f3f4f6;
+}
+
+.exercise-block{
+  margin-top:18px;
+  padding:15px;
+  background:#f8fafc;
+  border-radius:10px;
+  border:1px solid #e5e7eb;
+}
+
+.exercise-answer{
+  margin-top:8px;
+  font-weight:bold;
+}
+
+.slider-row{
+  margin-top:16px;
+}
+
+.slider-row label{
+  display:inline-block;
+  width:120px;
+}
+
+.slider-row input[type="range"]{
+  width:260px;
+  max-width:100%;
+  vertical-align:middle;
+}
+
+#bimetallCanvas{
+  background:white;
+  border:1px solid #dbe3ea;
+  border-radius:12px;
+  display:block;
+  margin-top:16px;
+  width:100%;
+  max-width:760px;
+}
+
+.small{
+  font-size:0.95rem;
+  color:#6b7280;
+}
+
+@media (max-width:800px){
+  .slider-row label{
+    display:block;
+    width:auto;
+    margin-bottom:6px;
+  }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="../">Start</a>
+  <a href="./">Physik</a>
+  <a href="klasse10.html">Klasse 10</a>
+  <a href="../Mathe/">Mathe</a>
+  <a href="../Chemie/">Chemie</a>
+</nav>
+
+<main>
+
+  <h1>🌡️ Messen, Steuern, Regeln</h1>
+  <p class="info-text">
+    Hier kannst du das Thema mit Quiz, Zuordnungsübung und einer kleinen Bimetall-Simulation üben.
+  </p>
+
+  <div class="card">
+    <h2>🎯 Interaktive Übung: Zuordnen</h2>
+    <p class="info-text">Ordne die Beispiele richtig zu: Messen, Steuern oder Regeln.</p>
+
+    <div class="exercise-block">
+      <p>1. Ein Thermometer zeigt die Raumtemperatur an.</p>
+      <button onclick="antwortZuordnung(1, 'messen')">Messen</button>
+      <button onclick="antwortZuordnung(1, 'falsch')">Steuern</button>
+      <button onclick="antwortZuordnung(1, 'falsch')">Regeln</button>
+      <div id="z1" class="exercise-answer"></div>
+    </div>
+
+    <div class="exercise-block">
+      <p>2. Ein Lichtschalter schaltet eine Lampe ein.</p>
+      <button onclick="antwortZuordnung(2, 'falsch')">Messen</button>
+      <button onclick="antwortZuordnung(2, 'steuern')">Steuern</button>
+      <button onclick="antwortZuordnung(2, 'falsch')">Regeln</button>
+      <div id="z2" class="exercise-answer"></div>
+    </div>
+
+    <div class="exercise-block">
+      <p>3. Ein Bügeleisen hält die eingestellte Temperatur automatisch ungefähr konstant.</p>
+      <button onclick="antwortZuordnung(3, 'falsch')">Messen</button>
+      <button onclick="antwortZuordnung(3, 'falsch')">Steuern</button>
+      <button onclick="antwortZuordnung(3, 'regeln')">Regeln</button>
+      <div id="z3" class="exercise-answer"></div>
+    </div>
+
+    <div class="exercise-block">
+      <p>4. Ein Bimetallthermometer zeigt eine Temperatur an.</p>
+      <button onclick="antwortZuordnung(4, 'messen')">Messen</button>
+      <button onclick="antwortZuordnung(4, 'falsch')">Steuern</button>
+      <button onclick="antwortZuordnung(4, 'falsch')">Regeln</button>
+      <div id="z4" class="exercise-answer"></div>
+    </div>
+
+    <div class="exercise-block">
+      <p>5. Ein Kühlerlüfter springt an, wenn der Motor zu heiß wird.</p>
+      <button onclick="antwortZuordnung(5, 'falsch')">Messen</button>
+      <button onclick="antwortZuordnung(5, 'steuern')">Steuern</button>
+      <button onclick="antwortZuordnung(5, 'falsch')">Regeln</button>
+      <div id="z5" class="exercise-answer"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🧠 Kurzes Quiz (5 Fragen)</h2>
+
+    <div class="quiz-question">
+      <p>1. Was bedeutet „Messen“?</p>
+      <label><input type="radio" name="k1" value="a"> Einen Schaltvorgang auslösen</label>
+      <label><input type="radio" name="k1" value="b"> Daten feststellen</label>
+      <label><input type="radio" name="k1" value="c"> Eine Temperatur konstant halten</label>
+    </div>
+
+    <div class="quiz-question">
+      <p>2. Was bedeutet „Steuern“?</p>
+      <label><input type="radio" name="k2" value="a"> Daten mit einem Sollwert vergleichen und anpassen</label>
+      <label><input type="radio" name="k2" value="b"> Temperatur nur ablesen</label>
+      <label><input type="radio" name="k2" value="c"> Einen Schaltvorgang mithilfe empfangener Daten auslösen</label>
+    </div>
+
+    <div class="quiz-question">
+      <p>3. Was bedeutet „Regeln“?</p>
+      <label><input type="radio" name="k3" value="a"> Empfangene Daten mit einem vorgegebenen Wert vergleichen und anpassen</label>
+      <label><input type="radio" name="k3" value="b"> Nur Daten feststellen</label>
+      <label><input type="radio" name="k3" value="c"> Nur einmal einschalten</label>
+    </div>
+
+    <div class="quiz-question">
+      <p>4. Was macht ein Bimetall?</p>
+      <label><input type="radio" name="k4" value="a"> Es leuchtet bei Wärme</label>
+      <label><input type="radio" name="k4" value="b"> Es verbiegt sich bei Temperaturänderung</label>
+      <label><input type="radio" name="k4" value="c"> Es speichert Strom</label>
+    </div>
+
+    <div class="quiz-question">
+      <p>5. Warum ist das Bügeleisen ein Beispiel für Regelung?</p>
+      <label><input type="radio" name="k5" value="a"> Weil es nur eingeschaltet wird</label>
+      <label><input type="radio" name="k5" value="b"> Weil es die Temperatur ständig mit dem Sollwert vergleicht und nachregelt</label>
+      <label><input type="radio" name="k5" value="c"> Weil es nur misst</label>
+    </div>
+
+    <button onclick="kurzesQuizAuswerten()">Kurzes Quiz auswerten</button>
+    <button onclick="kurzesQuizReset()">Kurzes Quiz löschen</button>
+
+    <div id="kurzErgebnis" class="result"></div>
+  </div>
+
+  <div class="card">
+    <h2>📝 Großes Quiz (10 Fragen)</h2>
+
+    <div class="quiz-question">
+      <p>1. Was ist Messen?</p>
+      <label><input type="radio" name="g1" value="a"> Das Feststellen von Daten</label>
+      <label><input type="radio" name="g1" value="b"> Das Einschalten einer Lampe</label>
+      <label><input type="radio" name="g1" value="c"> Das Regeln einer Temperatur</label>
+    </div>
+
+    <div class="quiz-question">
+      <p>2. Was ist Steuern?</p>
+      <label><input type="radio" name="g2" value="a"> Das Vergleichen mit einem Sollwert und Anpassen</label>
+      <label><input type="radio" name="g2" value="b"> Das Auslösen eines Schaltvorgangs mithilfe empfangener Daten</label>
+      <label><input type="radio" name="g2" value="c"> Das reine Ablesen einer Temperatur</label>
+    </div>
+
+    <div class="quiz-question">
+      <p>3. Was ist Regeln?</p>
+      <label><input type="radio" name="g3" value="a"> Das Feststellen von Daten</label>
+      <label><input type="radio" name="g3" value="b"> Das einmalige Auslösen eines Schalters</label>
+      <label><input type="radio" name="g3" value="c"> Das Vergleichen mit einem vorgegebenen Wert und Anpassen</label>
+    </div>
+
+    <div class="quiz-question">
+      <p>4. Wozu dient ein Bimetallthermometer?</p>
+      <label><input type="radio" name="g4" value="a"> Zum Messen der Temperatur</label>
+      <label><input type="radio" name="g4" value="b"> Zum Erzeugen von Licht</label>
+      <label><input type="radio" name="g4" value="c"> Zum Speichern von Wärme</label>
+    </div>
+
+    <div class="quiz-question">
+      <p>5. Was passiert mit einem Bimetall bei Erwärmung?</p>
+      <label><input type="radio" name="g5" value="a"> Es bleibt gerade</label>
+      <label><input type="radio" name="g5" value="b"> Es verbiegt sich</label>
+      <label><input type="radio" name="g5" value="c"> Es schmilzt sofort</label>
+    </div>
+
+    <div class="quiz-question">
+      <p>6. Wofür ist das Bimetall im Bügeleisen wichtig?</p>
+      <label><input type="radio" name="g6" value="a"> Es regelt die Temperatur</label>
+      <label><input type="radio" name="g6" value="b"> Es erzeugt den Strom</label>
+      <label><input type="radio" name="g6" value="c"> Es kühlt die Sohle ab</label>
+    </div>
+
+    <div class="quiz-question">
+      <p>7. Warum ist ein Bügeleisen kein Beispiel für bloßes Steuern?</p>
+      <label><input type="radio" name="g7" value="a"> Weil die Temperatur ständig mit dem Sollwert verglichen wird</label>
+      <label><input type="radio" name="g7" value="b"> Weil es keinen Stromkreis hat</label>
+      <label><input type="radio" name="g7" value="c"> Weil es nur aus Metall besteht</label>
+    </div>
+
+    <div class="quiz-question">
+      <p>8. Was passiert, wenn das Bügeleisen genug abgekühlt ist?</p>
+      <label><input type="radio" name="g8" value="a"> Es bleibt für immer aus</label>
+      <label><input type="radio" name="g8" value="b"> Es wird wieder eingeschaltet</label>
+      <label><input type="radio" name="g8" value="c"> Es misst dann keine Temperatur mehr</label>
+    </div>
+
+    <div class="quiz-question">
+      <p>9. Was zeigt das Beispiel mit dem Kühlerlüfter beim Auto?</p>
+      <label><input type="radio" name="g9" value="a"> Eine Steuerung</label>
+      <label><input type="radio" name="g9" value="b"> Nur eine Messung</label>
+      <label><input type="radio" name="g9" value="c"> Eine Lichtquelle</label>
+    </div>
+
+    <div class="quiz-question">
+      <p>10. Welche Aussage passt zu „Regeln“?</p>
+      <label><input type="radio" name="g10" value="a"> Ein Schalter wird einmal gedrückt</label>
+      <label><input type="radio" name="g10" value="b"> Daten werden festgestellt</label>
+      <label><input type="radio" name="g10" value="c"> Empfangene Daten werden mit einem vorgegebenen Wert verglichen</label>
+    </div>
+
+    <button onclick="grossesQuizAuswerten()">Großes Quiz auswerten</button>
+    <button onclick="grossesQuizReset()">Großes Quiz löschen</button>
+
+    <div id="grossErgebnis" class="result"></div>
+  </div>
+
+  <div class="card">
+    <h2>🌡️ Interaktive Bimetall-Simulation</h2>
+    <p class="info-text">
+      Schiebe den Temperaturregler nach rechts. Das Bimetall verbiegt sich bei Erwärmung stärker.
+    </p>
+
+    <canvas id="bimetallCanvas" width="760" height="300"></canvas>
+
+    <div class="slider-row">
+      <label for="temperatur">Temperatur</label>
+      <input id="temperatur" type="range" min="0" max="100" value="20">
+      <span id="tempWert">20 °C</span>
+    </div>
+
+    <p class="small">
+      Beobachtung: Je höher die Temperatur, desto stärker ist die Verbiegung.
+    </p>
+  </div>
+
+</main>
 
 <script>
-function antwort(type,nr){
-let text = "❌ Falsch";
-
-if(type==="messen") text="✅ Richtig (Messen)";
-if(type==="steuern") text="✅ Richtig (Steuern)";
-if(type==="regeln") text="✅ Richtig (Regeln)";
-
-document.getElementById("a"+nr).innerText = text;
+function antwortZuordnung(nr, typ){
+  let text = "❌ Falsch.";
+  if(typ === "messen") text = "✅ Richtig! Das ist Messen.";
+  if(typ === "steuern") text = "✅ Richtig! Das ist Steuern.";
+  if(typ === "regeln") text = "✅ Richtig! Das ist Regeln.";
+  document.getElementById("z" + nr).innerText = text;
 }
+
+function kurzesQuizAuswerten(){
+  const loesungen = {
+    k1:"b",
+    k2:"c",
+    k3:"a",
+    k4:"b",
+    k5:"b"
+  };
+
+  const erklaerungen = {
+    k1:"Messen bedeutet: Daten feststellen.",
+    k2:"Steuern bedeutet: Einen Schaltvorgang mithilfe empfangener Daten auslösen.",
+    k3:"Regeln bedeutet: Mit einem Sollwert vergleichen und anpassen.",
+    k4:"Ein Bimetall verbiegt sich bei Temperaturänderungen.",
+    k5:"Beim Bügeleisen wird ständig verglichen und nachgeregelt."
+  };
+
+  let punkte = 0;
+  let text = "";
+
+  for(let q in loesungen){
+    let auswahl = document.querySelector('input[name="' + q + '"]:checked');
+    if(auswahl && auswahl.value === loesungen[q]){
+      punkte++;
+      text += "Frage " + q[1] + ": ✅ richtig<br>";
+    } else if(auswahl){
+      text += "Frage " + q[1] + ": ❌ falsch – " + erklaerungen[q] + "<br>";
+    } else {
+      text += "Frage " + q[1] + ": ❌ nicht beantwortet – " + erklaerungen[q] + "<br>";
+    }
+  }
+
+  text += "<br><b>Punkte: " + punkte + " / 5</b>";
+  document.getElementById("kurzErgebnis").innerHTML = text;
+}
+
+function kurzesQuizReset(){
+  document.querySelectorAll('input[name="k1"], input[name="k2"], input[name="k3"], input[name="k4"], input[name="k5"]').forEach(r => r.checked = false);
+  document.getElementById("kurzErgebnis").innerHTML = "";
+}
+
+function grossesQuizAuswerten(){
+  const loesungen = {
+    g1:"a",
+    g2:"b",
+    g3:"c",
+    g4:"a",
+    g5:"b",
+    g6:"a",
+    g7:"a",
+    g8:"b",
+    g9:"a",
+    g10:"c"
+  };
+
+  let punkte = 0;
+  let text = "";
+
+  for(let q in loesungen){
+    let auswahl = document.querySelector('input[name="' + q + '"]:checked');
+    if(auswahl && auswahl.value === loesungen[q]){
+      punkte++;
+      text += "Frage " + q.substring(1) + ": ✅ richtig<br>";
+    } else if(auswahl){
+      text += "Frage " + q.substring(1) + ": ❌ falsch<br>";
+    } else {
+      text += "Frage " + q.substring(1) + ": ❌ keine Antwort<br>";
+    }
+  }
+
+  text += "<br><b>Punkte: " + punkte + " / 10</b>";
+  document.getElementById("grossErgebnis").innerHTML = text;
+}
+
+function grossesQuizReset(){
+  document.querySelectorAll('input[name="g1"], input[name="g2"], input[name="g3"], input[name="g4"], input[name="g5"], input[name="g6"], input[name="g7"], input[name="g8"], input[name="g9"], input[name="g10"]').forEach(r => r.checked = false);
+  document.getElementById("grossErgebnis").innerHTML = "";
+}
+
+const canvas = document.getElementById("bimetallCanvas");
+const ctx = canvas.getContext("2d");
+const temperaturSlider = document.getElementById("temperatur");
+const tempWert = document.getElementById("tempWert");
+
+function drawBimetall(){
+  const t = Number(temperaturSlider.value);
+  tempWert.textContent = t + " °C";
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  ctx.fillStyle = "#f8fafc";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  ctx.strokeStyle = "#cbd5e1";
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(80, 230);
+  ctx.lineTo(680, 230);
+  ctx.stroke();
+
+  ctx.fillStyle = "#9ca3af";
+  ctx.fillRect(100, 205, 25, 50);
+
+  const bend = t * 0.7;
+
+  ctx.lineWidth = 10;
+
+  ctx.strokeStyle = "#2563eb";
+  ctx.beginPath();
+  ctx.moveTo(112, 210);
+  ctx.quadraticCurveTo(330, 120 - bend, 620, 170 - bend);
+  ctx.stroke();
+
+  ctx.strokeStyle = "#ef4444";
+  ctx.beginPath();
+  ctx.moveTo(112, 220);
+  ctx.quadraticCurveTo(330, 135 - bend * 0.7, 620, 185 - bend * 0.7);
+  ctx.stroke();
+
+  ctx.fillStyle = "#111827";
+  ctx.font = "18px Arial";
+  ctx.fillText("Bimetall", 110, 70);
+
+  ctx.fillStyle = "#f59e0b";
+  const flameHeight = 40 + t * 0.8;
+  ctx.beginPath();
+  ctx.moveTo(300, 230);
+  ctx.quadraticCurveTo(325, 230 - flameHeight, 350, 230);
+  ctx.quadraticCurveTo(330, 210, 300, 230);
+  ctx.fill();
+
+  ctx.fillStyle = "#374151";
+  ctx.fillText("Erwärmung", 280, 260);
+}
+
+temperaturSlider.addEventListener("input", drawBimetall);
+drawBimetall();
 </script>
+
+</body>
+</html>
