@@ -513,8 +513,10 @@ function drawBimetall(){
   ctx.lineTo(670, 250);
   ctx.stroke();
 
-  // Kontaktstatus
-  const kontaktGeschlossen = endX >= kontaktX - 8 && Math.abs(endY - kontaktY) < 8;
+  // Kontakt ist geschlossen, solange das Ende des Streifens den Kontakt noch erreicht
+  const horizontalNah = endX >= kontaktX - 55;
+  const vertikalNah = Math.abs(endY - kontaktY) <= 10;
+  const kontaktGeschlossen = horizontalNah && vertikalNah;
 
   ctx.font = "18px Arial";
   ctx.fillStyle = "#111827";
@@ -545,10 +547,10 @@ function drawBimetall(){
   // Hinweis
   ctx.fillStyle = "#6b7280";
   ctx.font = "15px Arial";
-  if (t <= 50) {
+  if (t < 50) {
     ctx.fillText("Unter 50 °C fast keine sichtbare Verbiegung", 360, 75);
   } else {
-    ctx.fillText("Ab etwa 50 °C wird die Verbiegung deutlich", 370, 75);
+    ctx.fillText("Der Streifen biegt sich weg und öffnet den Kontakt", 350, 75);
   }
 
   // kleine Lampe rechts als Symbol für Stromkreis
@@ -563,15 +565,30 @@ function drawBimetall(){
     ctx.beginPath();
     ctx.arc(690, 250, 12, 0, Math.PI * 2);
     ctx.fill();
+
+    // Lichtstrahlen
+    ctx.strokeStyle = "#f59e0b";
+    ctx.lineWidth = 2;
+
+    ctx.beginPath();
+    ctx.moveTo(690, 228);
+    ctx.lineTo(690, 218);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(708, 232);
+    ctx.lineTo(715, 225);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(672, 232);
+    ctx.lineTo(665, 225);
+    ctx.stroke();
   }
 
   ctx.fillStyle = "#374151";
   ctx.fillText("Lampe", 670, 280);
 }
-
-temperaturSlider.addEventListener("input", drawBimetall);
-drawBimetall();
-</script>
 
 </body>
 </html>
