@@ -463,7 +463,7 @@ function drawBimetall(){
   const startX = 112;
   const startY = 200;
 
-  const endX = 560;
+  const endX = 600;
   const endY = 200 - bend * 0.55;
 
   const controlX = 340;
@@ -514,7 +514,7 @@ function drawBimetall(){
   ctx.stroke();
 
   // Kontakt ist geschlossen, solange das Ende des Streifens den Kontakt noch erreicht
-  const horizontalNah = endX >= kontaktX - 55;
+  const horizontalNah = endX >= kontaktX - 15;
   const vertikalNah = Math.abs(endY - kontaktY) <= 10;
   const kontaktGeschlossen = horizontalNah && vertikalNah;
 
