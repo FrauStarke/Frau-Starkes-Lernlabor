@@ -434,6 +434,7 @@ const temperaturSlider = document.getElementById("temperatur");
 const tempWert = document.getElementById("tempWert");
 
 function drawBimetall(){
+  function drawBimetall(){
   const t = Number(temperaturSlider.value);
   tempWert.textContent = t + " °C";
 
@@ -442,6 +443,7 @@ function drawBimetall(){
   ctx.fillStyle = "#f8fafc";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+  // Bodenlinie
   ctx.strokeStyle = "#cbd5e1";
   ctx.lineWidth = 1;
   ctx.beginPath();
@@ -449,31 +451,48 @@ function drawBimetall(){
   ctx.lineTo(680, 230);
   ctx.stroke();
 
+  // Halterung links
   ctx.fillStyle = "#9ca3af";
-  ctx.fillRect(100, 205, 25, 50);
+  ctx.fillRect(100, 185, 22, 60);
 
-  const bend = t * 0.7;
+  // Verbiegung erst ab höherer Temperatur
+  let bend = 0;
+  if (t > 50) {
+    bend = (t - 50) * 1.4;
+  }
 
-  ctx.lineWidth = 10;
+  // gemeinsamer Verlauf des Bimetallstreifens
+  const startX = 112;
+  const startY = 200;
+  const endX = 620;
+  const endY = 200 - bend * 0.7;
+  const controlX = 360;
+  const controlY = 200 - bend;
 
+  // untere Metallschicht
+  ctx.lineWidth = 12;
   ctx.strokeStyle = "#2563eb";
   ctx.beginPath();
-  ctx.moveTo(112, 210);
-  ctx.quadraticCurveTo(330, 120 - bend, 620, 170 - bend);
+  ctx.moveTo(startX, startY + 4);
+  ctx.quadraticCurveTo(controlX, controlY + 4, endX, endY + 4);
   ctx.stroke();
 
+  // obere Metallschicht – direkt anliegend
+  ctx.lineWidth = 12;
   ctx.strokeStyle = "#ef4444";
   ctx.beginPath();
-  ctx.moveTo(112, 220);
-  ctx.quadraticCurveTo(330, 135 - bend * 0.7, 620, 185 - bend * 0.7);
+  ctx.moveTo(startX, startY - 4);
+  ctx.quadraticCurveTo(controlX, controlY - 4, endX, endY - 4);
   ctx.stroke();
 
+  // Beschriftung
   ctx.fillStyle = "#111827";
   ctx.font = "18px Arial";
-  ctx.fillText("Bimetall", 110, 70);
+  ctx.fillText("Bimetallstreifen", 110, 70);
 
+  // Wärmequelle
   ctx.fillStyle = "#f59e0b";
-  const flameHeight = 40 + t * 0.8;
+  const flameHeight = 35 + t * 0.5;
   ctx.beginPath();
   ctx.moveTo(300, 230);
   ctx.quadraticCurveTo(325, 230 - flameHeight, 350, 230);
@@ -482,6 +501,15 @@ function drawBimetall(){
 
   ctx.fillStyle = "#374151";
   ctx.fillText("Erwärmung", 280, 260);
+
+  // Hinweistext
+  ctx.fillStyle = "#6b7280";
+  ctx.font = "15px Arial";
+  if (t <= 50) {
+    ctx.fillText("Unter 50 °C fast keine sichtbare Verbiegung", 390, 45);
+  } else {
+    ctx.fillText("Ab etwa 50 °C wird die Verbiegung deutlich", 400, 45);
+  }
 }
 
 temperaturSlider.addEventListener("input", drawBimetall);
