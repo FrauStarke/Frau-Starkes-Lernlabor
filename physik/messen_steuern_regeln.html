@@ -334,7 +334,7 @@ button:hover{
     </div>
 
     <p class="small">
-      Beobachtung: Je höher die Temperatur, desto stärker ist die Verbiegung.
+      Unter etwa 50 °C ist fast keine Verbiegung sichtbar. Bei höherer Temperatur öffnet sich der Kontakt.
     </p>
   </div>
 
@@ -434,7 +434,6 @@ const temperaturSlider = document.getElementById("temperatur");
 const tempWert = document.getElementById("tempWert");
 
 function drawBimetall(){
-  function drawBimetall(){
   const t = Number(temperaturSlider.value);
   tempWert.textContent = t + " °C";
 
@@ -458,36 +457,67 @@ function drawBimetall(){
   // Verbiegung erst ab höherer Temperatur
   let bend = 0;
   if (t > 50) {
-    bend = (t - 50) * 1.4;
+    bend = Math.pow(t - 50, 1.15);
   }
 
-  // gemeinsamer Verlauf des Bimetallstreifens
   const startX = 112;
   const startY = 200;
-  const endX = 620;
-  const endY = 200 - bend * 0.7;
-  const controlX = 360;
+
+  const endX = 560;
+  const endY = 200 - bend * 0.55;
+
+  const controlX = 340;
   const controlY = 200 - bend;
 
-  // untere Metallschicht
-  ctx.lineWidth = 12;
+  // Bimetallstreifen: zwei Metallschichten direkt zusammen
+  ctx.lineWidth = 10;
+
   ctx.strokeStyle = "#2563eb";
   ctx.beginPath();
-  ctx.moveTo(startX, startY + 4);
-  ctx.quadraticCurveTo(controlX, controlY + 4, endX, endY + 4);
+  ctx.moveTo(startX, startY + 2);
+  ctx.quadraticCurveTo(controlX, controlY + 2, endX, endY + 2);
   ctx.stroke();
 
-  // obere Metallschicht – direkt anliegend
-  ctx.lineWidth = 12;
   ctx.strokeStyle = "#ef4444";
   ctx.beginPath();
-  ctx.moveTo(startX, startY - 4);
-  ctx.quadraticCurveTo(controlX, controlY - 4, endX, endY - 4);
+  ctx.moveTo(startX, startY - 2);
+  ctx.quadraticCurveTo(controlX, controlY - 2, endX, endY - 2);
   ctx.stroke();
 
-  // Beschriftung
+  // Fester Kontakt rechts
+  const kontaktX = 610;
+  const kontaktY = 198;
+
+  ctx.fillStyle = "#6b7280";
+  ctx.fillRect(kontaktX, kontaktY - 18, 10, 36);
+
+  // Kontaktstück am Ende des Bimetalls
   ctx.fillStyle = "#111827";
+  ctx.beginPath();
+  ctx.arc(endX, endY, 5, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Leitung links
+  ctx.strokeStyle = "#7c3aed";
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.moveTo(112, 220);
+  ctx.lineTo(112, 250);
+  ctx.lineTo(250, 250);
+  ctx.stroke();
+
+  // Leitung rechts
+  ctx.beginPath();
+  ctx.moveTo(kontaktX + 5, kontaktY);
+  ctx.lineTo(kontaktX + 5, 250);
+  ctx.lineTo(670, 250);
+  ctx.stroke();
+
+  // Kontaktstatus
+  const kontaktGeschlossen = endX >= kontaktX - 8 && Math.abs(endY - kontaktY) < 8;
+
   ctx.font = "18px Arial";
+  ctx.fillStyle = "#111827";
   ctx.fillText("Bimetallstreifen", 110, 70);
 
   // Wärmequelle
@@ -500,16 +530,43 @@ function drawBimetall(){
   ctx.fill();
 
   ctx.fillStyle = "#374151";
-  ctx.fillText("Erwärmung", 280, 260);
+  ctx.fillText("Erwärmung", 280, 270);
 
-  // Hinweistext
+  // Statusanzeige
+  ctx.font = "16px Arial";
+  if (kontaktGeschlossen) {
+    ctx.fillStyle = "#16a34a";
+    ctx.fillText("Kontakt geschlossen – Stromkreis geschlossen", 350, 45);
+  } else {
+    ctx.fillStyle = "#dc2626";
+    ctx.fillText("Kontakt geöffnet – Stromkreis unterbrochen", 350, 45);
+  }
+
+  // Hinweis
   ctx.fillStyle = "#6b7280";
   ctx.font = "15px Arial";
   if (t <= 50) {
-    ctx.fillText("Unter 50 °C fast keine sichtbare Verbiegung", 390, 45);
+    ctx.fillText("Unter 50 °C fast keine sichtbare Verbiegung", 360, 75);
   } else {
-    ctx.fillText("Ab etwa 50 °C wird die Verbiegung deutlich", 400, 45);
+    ctx.fillText("Ab etwa 50 °C wird die Verbiegung deutlich", 370, 75);
   }
+
+  // kleine Lampe rechts als Symbol für Stromkreis
+  ctx.strokeStyle = "#374151";
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.arc(690, 250, 16, 0, Math.PI * 2);
+  ctx.stroke();
+
+  if (kontaktGeschlossen) {
+    ctx.fillStyle = "#fde047";
+    ctx.beginPath();
+    ctx.arc(690, 250, 12, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  ctx.fillStyle = "#374151";
+  ctx.fillText("Lampe", 670, 280);
 }
 
 temperaturSlider.addEventListener("input", drawBimetall);
